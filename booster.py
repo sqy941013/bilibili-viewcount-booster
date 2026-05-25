@@ -9,11 +9,23 @@ from collections import Counter
 from typing import Optional
 from datetime import date, datetime, timedelta
 
+try:
+    from curl_cffi import requests as cffi_requests
+    USE_CURL_CFFI = True
+except ImportError:
+    import requests as cffi_requests
+    USE_CURL_CFFI = False
+
 import requests
 from requests.exceptions import RequestException
 from fake_useragent import UserAgent
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+# Chrome impersonation targets (JA3 + HTTP/2 fingerprints)
+CHROME_TARGETS = [
+    'chrome120', 'chrome124', 'chrome131', 'chrome133a',
+]
 
 
 def gen_buvid() -> tuple[str, str]:
@@ -33,6 +45,12 @@ def make_session(session, bv: str, ua: Optional[str] = None) -> None:
     buvid3, buvid4 = gen_buvid()
     session.headers['Referer'] = f'https://www.bilibili.com/video/{bv}/'
     session.headers['Cookie'] = f'buvid3={buvid3}; buvid4={buvid4}'
+
+
+def make_browser_session(**kwargs) -> cffi_requests.Session:
+    """Create a session that impersonates a real Chrome browser."""
+    target = random.choice(CHROME_TARGETS)
+    return cffi_requests.Session(impersonate=target, **kwargs)
 
 
 def send_heartbeat(session, info: dict, bv: str, timeout: int, played_time: int = 3) -> bool:
@@ -69,7 +87,7 @@ if len(sys.argv) < 3:
     print(f'       python {sys.argv[0]} <BV/AV_ID> <target_views> --proxytype http|socks5  (default: http)')
     print(f'       python {sys.argv[0]} <BV/AV_ID> <target_views> --threads N  (default: 75, filter concurrency)')
     print(f'       python {sys.argv[0]} <BV/AV_ID> <target_views> --boost-threads N  (default: 1, boosting concurrency)')
-    print(f'       python {sys.argv[0]} <BV/AV_ID> <target_views> --watch-range MIN MAX  (default: 10 20, random watch seconds)')
+    print(f'       python {sys.argv[0]} <BV/AV_ID> <target_views> --watch-range MIN MAX  (default: 3 5, random watch seconds)')
     sys.exit(1)
 
 bv = sys.argv[1]  # video BV/AV id (raw input)
@@ -83,8 +101,8 @@ residential_auth = None     # e.g. username:password
 proxy_type = 'http'         # http or socks5
 thread_num = 75             # thread count for filtering
 boost_threads = 1           # thread count for boosting
-watch_time_min = 3         # minimum watch seconds
-watch_time_max = 5         # maximum watch seconds
+watch_time_min = 3          # minimum watch seconds
+watch_time_max = 5          # maximum watch seconds
 
 i = 3
 while i < len(sys.argv):
@@ -396,6 +414,10 @@ elif not residential_gateway:
 
 # 3.boost view count
 print(f'\nstart boosting {bv} at {datetime.now().strftime("%H:%M:%S")}')
+if USE_CURL_CFFI:
+    print('TLS mode: curl_cffi (Chrome browser impersonation)')
+else:
+    print('TLS mode: requests (no browser impersonation, install curl_cffi for better results)')
 current = 0
 info = {}  # Initialize info dictionary
 
@@ -434,11 +456,11 @@ if residential_gateway:
     boost_round = 0
 
     def do_boost_residential() -> bool:
-        """One boosting attempt for residential proxy. Returns True if hit."""
+        """One boosting attempt for residential proxy."""
         global total_successful_hits, total_attempted
         watch_time = random.randint(watch_time_min, watch_time_max)
         try:
-            session = requests.Session()
+            session = make_browser_session()
             session.proxies.update(bd_proxy)
             make_session(session, bv)
             session.get(f'https://www.bilibili.com/video/{bv}/', timeout=watch_time + 5)
@@ -462,9 +484,9 @@ if residential_gateway:
                 if resp.status_code < 400:
                     total_successful_hits += 1
             return True
-        except requests.exceptions.Timeout:
+        except cffi_requests.Timeout:
             failure_counter['Connection timeout'] += 1
-        except requests.exceptions.ConnectionError as e:
+        except cffi_requests.ConnectionError as e:
             reason = str(e).lower()
             if 'refused' in reason:
                 failure_counter['Connection refused'] += 1
@@ -507,7 +529,7 @@ else:
         proxy_scheme = 'socks5' if proxy_type == 'socks5' else 'https'
         proxy_conf = {proxy_scheme: f'{proxy_scheme}://{proxy}'}
         try:
-            session = requests.Session()
+            session = make_browser_session()
             session.proxies.update(proxy_conf)
             make_session(session, bv)
             session.get(f'https://www.bilibili.com/video/{bv}/', timeout=watch_time + 5)
@@ -531,9 +553,9 @@ else:
                 if resp.status_code < 400:
                     total_successful_hits += 1
                     round_hits += 1
-        except requests.exceptions.Timeout:
+        except cffi_requests.Timeout:
             failure_counter['Connection timeout'] += 1
-        except requests.exceptions.ConnectionError as e:
+        except cffi_requests.ConnectionError as e:
             reason = str(e).lower()
             if 'refused' in reason:
                 failure_counter['Connection refused'] += 1
