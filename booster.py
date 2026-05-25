@@ -35,7 +35,7 @@ def make_session(session, bv: str, ua: Optional[str] = None) -> None:
     session.headers['Cookie'] = f'buvid3={buvid3}; buvid4={buvid4}'
 
 
-def send_heartbeat(session, info: dict, bv: str, timeout: int) -> bool:
+def send_heartbeat(session, info: dict, bv: str, timeout: int, played_time: int = 3) -> bool:
     """Send heartbeat to bilibili to simulate active viewing."""
     try:
         session.post('https://api.bilibili.com/x/click-interface/web/heartbeat',
@@ -44,9 +44,9 @@ def send_heartbeat(session, info: dict, bv: str, timeout: int) -> bool:
                          'aid': info['aid'],
                          'cid': info['cid'],
                          'bvid': bv,
-                         'played_time': 10,
-                         'realtime': 10,
-                         'real_played_time': 10,
+                         'played_time': played_time,
+                         'realtime': played_time,
+                         'real_played_time': played_time,
                          'dt': 2,
                          'play_type': 0,
                          'start_ts': 0,
@@ -83,8 +83,8 @@ residential_auth = None     # e.g. username:password
 proxy_type = 'http'         # http or socks5
 thread_num = 75             # thread count for filtering
 boost_threads = 1           # thread count for boosting
-watch_time_min = 10         # minimum watch seconds
-watch_time_max = 20         # maximum watch seconds
+watch_time_min = 3         # minimum watch seconds
+watch_time_max = 5         # maximum watch seconds
 
 i = 3
 while i < len(sys.argv):
@@ -443,7 +443,7 @@ if residential_gateway:
             make_session(session, bv)
             session.get(f'https://www.bilibili.com/video/{bv}/', timeout=watch_time + 5)
             sleep(watch_time)
-            send_heartbeat(session, info, bv, timeout)
+            send_heartbeat(session, info, bv, timeout, played_time=watch_time)
             resp = session.post('https://api.bilibili.com/x/click-interface/click/web/h5',
                           timeout=timeout,
                           data={
@@ -512,7 +512,7 @@ else:
             make_session(session, bv)
             session.get(f'https://www.bilibili.com/video/{bv}/', timeout=watch_time + 5)
             sleep(watch_time)
-            send_heartbeat(session, info, bv, timeout)
+            send_heartbeat(session, info, bv, timeout, played_time=watch_time)
             resp = session.post('https://api.bilibili.com/x/click-interface/click/web/h5',
                           timeout=timeout,
                           data={
