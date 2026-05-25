@@ -1,5 +1,6 @@
 import sys
 import os
+import uuid
 import threading
 import random
 import urllib3
@@ -13,6 +14,48 @@ from requests.exceptions import RequestException
 from fake_useragent import UserAgent
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+
+def gen_buvid() -> tuple[str, str]:
+    """Generate fake B站 device fingerprints."""
+    buvid3 = uuid.uuid4().hex.upper()
+    buvid4 = uuid.uuid4().hex.upper()
+    return buvid3, buvid4
+
+
+def make_session(session, bv: str, ua: Optional[str] = None) -> None:
+    """Set up session headers for bilibili."""
+    session.verify = False
+    if ua:
+        session.headers['User-Agent'] = ua
+    else:
+        session.headers['User-Agent'] = UserAgent().random
+    buvid3, buvid4 = gen_buvid()
+    session.headers['Referer'] = f'https://www.bilibili.com/video/{bv}/'
+    session.headers['Cookie'] = f'buvid3={buvid3}; buvid4={buvid4}'
+
+
+def send_heartbeat(session, info: dict, bv: str, timeout: int) -> bool:
+    """Send heartbeat to bilibili to simulate active viewing."""
+    try:
+        session.post('https://api.bilibili.com/x/click-interface/web/heartbeat',
+                     timeout=timeout,
+                     data={
+                         'aid': info['aid'],
+                         'cid': info['cid'],
+                         'bvid': bv,
+                         'played_time': 10,
+                         'realtime': 10,
+                         'real_played_time': 10,
+                         'dt': 2,
+                         'play_type': 0,
+                         'start_ts': 0,
+                         'referer': f'https://www.bilibili.com/video/{bv}/',
+                     })
+        return True
+    except:
+        return False
+
 
 # parameters
 timeout = 3  # seconds for proxy connection timeout
@@ -380,19 +423,21 @@ if residential_gateway:
             print(f'{pbar(target, target, total_successful_hits, current - initial_view_count)} done                 ', end='')
             break
 
-        old_views = current
         print(f'{pbar(current, target, total_successful_hits, current - initial_view_count)} request #{total_attempted + 1} (watching {watch_time}s)   ', end='')
 
         try:
-            # Step 1: visit video page for 10 seconds (simulates actual watch)
             session = requests.Session()
             session.proxies.update(bd_proxy)
-            session.verify = False
-            session.headers['User-Agent'] = UserAgent().random
+            make_session(session, bv)
+
+            # Step 1: visit video page
             session.get(f'https://www.bilibili.com/video/{bv}/', timeout=watch_time + 5)
             sleep(watch_time)
 
-            # Step 2: send click API request
+            # Step 2: send heartbeat (simulates active viewing)
+            send_heartbeat(session, info, bv, timeout)
+
+            # Step 3: send click API
             resp = session.post('https://api.bilibili.com/x/click-interface/click/web/h5',
                           timeout=timeout,
                           data={
@@ -430,7 +475,7 @@ else:
         start_time = datetime.now()
         round_hits = 0
 
-        # send POST click request for each proxy
+        # send viewing simulation for each proxy
         for i, proxy in enumerate(active_proxies):
             try:
                 if i % update_pbar_count == 0:  # update progress bar
@@ -446,11 +491,20 @@ else:
                     proxy_scheme: f'{proxy_scheme}://{proxy}',
                 }
 
-                resp = requests.post('https://api.bilibili.com/x/click-interface/click/web/h5',
-                              proxies=proxy_conf,
-                              headers={'User-Agent': UserAgent().random},
+                session = requests.Session()
+                session.proxies.update(proxy_conf)
+                make_session(session, bv)
+
+                # Step 1: visit video page
+                session.get(f'https://www.bilibili.com/video/{bv}/', timeout=timeout + 5)
+                sleep(1)
+
+                # Step 2: send heartbeat
+                send_heartbeat(session, info, bv, timeout)
+
+                # Step 3: send click API
+                resp = session.post('https://api.bilibili.com/x/click-interface/click/web/h5',
                               timeout=timeout,
-                              verify=False,
                               data={
                                   'aid': info['aid'],
                                   'cid': info['cid'],
@@ -461,6 +515,7 @@ else:
                                   'type': info['desc_v2'][0]['type'] if info['desc_v2'] else '1',
                                   'sub_type': '0'
                               })
+                session.close()
                 if resp.status_code >= 400:
                     failure_counter[f'HTTP {resp.status_code}'] += 1
                 else:
