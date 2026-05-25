@@ -581,11 +581,13 @@ if residential_gateway:
         return False
 
     def boost_worker(worker_id: int) -> None:
-        """Independent worker thread: boost -> random delay -> repeat.
-        Requests from all workers are distributed across a 60-second window.
+        """Independent worker thread: boost -> 60s wait -> repeat.
+        Workers are staggered at startup so requests are evenly spread
+        across each 60-second window (e.g. worker 0 at :00s, worker 1 at :12s, etc.)
         """
-        # Staggered start: each worker begins at a random offset within 60s
-        sleep(random.uniform(0, 60))
+        # Staggered start: spread workers evenly across the 60s window
+        stagger = (worker_id / boost_threads) * 60 + random.uniform(0, 60 / boost_threads)
+        sleep(stagger)
         while True:
             with cooldown_lock:
                 if datetime.now() < cooldown_end_time:
@@ -598,10 +600,9 @@ if residential_gateway:
             with stats_lock:
                 if info['stat']['view'] >= target:
                     return
-            # Wait ~60/boost_threads seconds with jitter to spread requests
-            base = 60 / boost_threads
-            jitter = random.uniform(-base * 0.3, base * 0.3)
-            sleep(max(5, base + jitter))
+            # Full 60-second cycle per worker to avoid rate limit clustering
+            jitter = random.uniform(-3, 3)
+            sleep(60 + jitter)
 
     # Cooldown tracking: trigger 5-min cooldown when 30 consecutive hits don't increase views
     consecutive_hits_without_increase = 0
