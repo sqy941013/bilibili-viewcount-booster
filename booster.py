@@ -143,12 +143,12 @@ def fetch_from_custom_url(source: str) -> list[str]:
 
 def fetch_from_proxypool(base_url: str) -> list[str]:
     """Fetch HTTPS proxies from jhao104/proxy_pool."""
-    api_url = f'{base_url}/get_all/'
+    api_url = f'{base_url}/all/?type=https'
     print(f'getting HTTPS proxies from proxy_pool at {api_url} ...')
     response = requests.get(api_url, timeout=timeout + 5)
     response.raise_for_status()
     data = response.json()
-    proxies = [item['proxy'] for item in data if item.get('https') is True and item.get('proxy')]
+    proxies = [item['proxy'] for item in data if item.get('proxy')]
     print(f'successfully get {len(proxies)} HTTPS proxies from proxy_pool')
     return proxies
 
