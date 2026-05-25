@@ -2,6 +2,7 @@ import sys
 import os
 import threading
 import random
+import urllib3
 from time import sleep
 from collections import Counter
 from typing import Optional
@@ -10,6 +11,8 @@ from datetime import date, datetime, timedelta
 import requests
 from requests.exceptions import RequestException
 from fake_useragent import UserAgent
+
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # parameters
 timeout = 3  # seconds for proxy connection timeout
@@ -300,10 +303,11 @@ while True:
                     print(f'{pbar(target, target, total_successful_hits, current - initial_view_count)} done                 ', end='')
                     break
 
-            resp = requests.post('http://api.bilibili.com/x/click-interface/click/web/h5',
-                          proxies={'http': 'http://'+proxy},
+            resp = requests.post('https://api.bilibili.com/x/click-interface/click/web/h5',
+                          proxies={'https': 'https://'+proxy},
                           headers={'User-Agent': UserAgent().random},
                           timeout=timeout,
+                          verify=False,
                           data={
                               'aid': info['aid'],
                               'cid': info['cid'],
