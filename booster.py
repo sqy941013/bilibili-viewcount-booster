@@ -1,6 +1,8 @@
 import sys
 import os
 import uuid
+import json
+import logging
 import threading
 import random
 import urllib3
@@ -170,6 +172,17 @@ while i < len(sys.argv):
 
 if residential_gateway and ':' not in residential_gateway:
     residential_gateway += ':33335'
+
+# Setup detailed logging for analysis
+log_dir = 'logs'
+os.makedirs(log_dir, exist_ok=True)
+log_file = os.path.join(log_dir, f'booster_{datetime.now().strftime("%Y%m%d_%H%M%S")}.log')
+logger = logging.getLogger('booster')
+logger.setLevel(logging.DEBUG)
+file_handler = logging.FileHandler(log_file, encoding='utf-8')
+file_handler.setFormatter(logging.Formatter('%(asctime)s | %(message)s'))
+logger.addHandler(file_handler)
+print(f'📝 Logging to {log_file}')
 
 
 def fetch_from_checkerproxy(min_count: int = 100, max_lookback_days: int = 7) -> list[str]:
@@ -507,14 +520,18 @@ if residential_gateway:
         """One boosting attempt for residential proxy with unique IP."""
         global total_successful_hits, total_attempted
         watch_time = random.randint(watch_time_min, watch_time_max)
+        session_id = uuid.uuid4().hex[:8]
+        log_prefix = f'[attempt #{total_attempted + 1}]'
         try:
             session = make_browser_session()
             session.proxies.update(get_residential_proxy_for_round())
             make_session(session, bv)
-            # Skip heavy video page HTML, go straight to player APIs
-            simulate_player(session, info, bv, timeout)
+            # Step 1: Player APIs
+            player_ok = simulate_player(session, info, bv, timeout)
             sleep(watch_time)
-            send_heartbeat(session, info, bv, timeout, played_time=watch_time)
+            # Step 2: Heartbeat
+            hb_ok = send_heartbeat(session, info, bv, timeout, played_time=watch_time)
+            # Step 3: Click API
             resp = session.post('https://api.bilibili.com/x/click-interface/click/web/h5',
                           timeout=timeout,
                           data={
@@ -528,33 +545,52 @@ if residential_gateway:
                               'sub_type': '0'
                           })
             session.close()
+            resp_code = resp.json().get('code', -1) if resp.text else -1
             with stats_lock:
                 total_attempted += 1
-                if resp.status_code < 400:
+                is_hit = resp.status_code < 400
+                if is_hit:
                     total_successful_hits += 1
+            logger.info(f'{log_prefix} session={session_id} watch={watch_time}s '
+                       f'player={'OK' if player_ok else 'FAIL'} heartbeat={'OK' if hb_ok else 'FAIL'} '
+                       f'click_status={resp.status_code} click_code={resp_code} '
+                       f'click_response={resp.text[:200]} | HIT={'YES' if is_hit else 'NO'}')
             return True
         except requests.exceptions.Timeout:
             failure_counter['Connection timeout'] += 1
+            with stats_lock:
+                total_attempted += 1
+            logger.info(f'{log_prefix} session={session_id} error=Connection timeout')
         except requests.exceptions.ConnectionError as e:
             reason = str(e).lower()
             if 'refused' in reason:
-                failure_counter['Connection refused'] += 1
+                err_type = 'Connection refused'
             elif 'timed out' in reason:
-                failure_counter['Connection timed out'] += 1
+                err_type = 'Connection timed out'
             else:
-                failure_counter['Connection error'] += 1
-        except Exception:
+                err_type = 'Connection error'
+            failure_counter[err_type] += 1
+            with stats_lock:
+                total_attempted += 1
+            logger.info(f'{log_prefix} session={session_id} error={err_type}')
+        except Exception as e:
             failure_counter['Other error'] += 1
-        with stats_lock:
-            total_attempted += 1
+            with stats_lock:
+                total_attempted += 1
+            logger.info(f'{log_prefix} session={session_id} error={type(e).__name__}: {str(e)[:200]}')
         return False
 
     while True:
         info = fetch_video_info(bv)
         current = info['stat']['view']
         if current >= target:
+            logger.info(f'DONE! Final views: {current} (target: {target})')
             print(f'{pbar(target, target, total_successful_hits, current - initial_view_count)} done                 ', end='')
             break
+
+        logger.info(f'Round {boost_round + 1}: current_views={current} target={target} '
+                   f'increase={current - initial_view_count} hits={total_successful_hits} '
+                   f'attempts={total_attempted} rate={total_successful_hits/max(total_attempted,1)*100:.1f}%')
 
         watch_display = f'{watch_time_min}-{watch_time_max}s'
         print(f'{pbar(current, target, total_successful_hits, current - initial_view_count)} round {boost_round + 1} ({boost_threads} threads, watching {watch_display})   ', end='')
@@ -666,3 +702,14 @@ if failed_total > 0:
     for reason, count in failure_counter.most_common():
         print(f'    - {reason}: {count}')
 print()
+
+logger.info(f'=== FINAL STATISTICS ===')
+logger.info(f'Initial views: {initial_view_count}')
+logger.info(f'Final views: {current}')
+logger.info(f'Total increase: {current - initial_view_count}')
+logger.info(f'Successful hits: {total_successful_hits}')
+logger.info(f'Total attempts: {total_attempted}')
+logger.info(f'Success rate: {success_rate:.2f}%')
+for reason, count in failure_counter.most_common():
+    logger.info(f'Failure - {reason}: {count}')
+logger.info(f'Log file: {log_file}')
