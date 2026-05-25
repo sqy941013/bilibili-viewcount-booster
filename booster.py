@@ -580,6 +580,35 @@ if residential_gateway:
             logger.info(f'{log_prefix} session={session_id} error={type(e).__name__}: {str(e)[:200]}')
         return False
 
+    def boost_worker(worker_id: int) -> None:
+        """Independent worker thread: boost -> random delay -> repeat.
+        Requests from all workers are distributed across a 60-second window.
+        """
+        # Staggered start: each worker begins at a random offset within 60s
+        sleep(random.uniform(0, 60))
+        while True:
+            with stats_lock:
+                if info['stat']['view'] >= target:
+                    return
+            do_boost_residential()
+            with stats_lock:
+                if info['stat']['view'] >= target:
+                    return
+            # Wait ~60/boost_threads seconds with jitter to spread requests
+            base = 60 / boost_threads
+            jitter = random.uniform(-base * 0.3, base * 0.3)
+            sleep(max(5, base + jitter))
+
+    # Launch independent worker threads
+    boost_round = 0
+    print(f'boost mode: {boost_threads} independent workers, requests distributed over 60s window')
+    workers = []
+    for i in range(boost_threads):
+        t = threading.Thread(target=boost_worker, args=(i,), daemon=True)
+        t.start()
+        workers.append(t)
+
+    # Main loop: periodically check and update progress
     while True:
         info = fetch_video_info(bv)
         current = info['stat']['view']
@@ -588,21 +617,15 @@ if residential_gateway:
             print(f'{pbar(target, target, total_successful_hits, current - initial_view_count)} done                 ', end='')
             break
 
-        logger.info(f'Round {boost_round + 1}: current_views={current} target={target} '
+        logger.info(f'current_views={current} target={target} '
                    f'increase={current - initial_view_count} hits={total_successful_hits} '
                    f'attempts={total_attempted} rate={total_successful_hits/max(total_attempted,1)*100:.1f}%')
 
         watch_display = f'{watch_time_min}-{watch_time_max}s'
-        print(f'{pbar(current, target, total_successful_hits, current - initial_view_count)} round {boost_round + 1} ({boost_threads} threads, watching {watch_display})   ', end='')
+        print(f'{pbar(current, target, total_successful_hits, current - initial_view_count)} ({boost_threads} workers, watching {watch_display})   ', end='')
 
-        threads = []
-        for _ in range(boost_threads):
-            t = threading.Thread(target=do_boost_residential)
-            t.start()
-            threads.append(t)
-        for t in threads:
-            t.join()
-
+        # Refresh info for workers every 30 seconds
+        sleep(30)
         boost_round += 1
 else:
     proxy_index = threading.Semaphore(boost_threads)
