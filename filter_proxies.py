@@ -61,7 +61,7 @@ def main():
     parser.add_argument('source', help='Proxy list source: local .txt file path or URL')
     parser.add_argument('-o', '--output', default=None,
                         help='Output file path (default: proxies/YYYYMMDD-HHMMSS.txt)')
-    parser.add_argument('-t', '--threads', type=int, default=75, help='Thread count (default: 75)')
+    parser.add_argument('-t', '--threads', type=int, default=250, help='Thread count (default: 250)')
     parser.add_argument('--timeout', type=int, default=3, help='Request timeout in seconds (default: 3)')
     args = parser.parse_args()
 

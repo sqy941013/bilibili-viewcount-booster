@@ -66,7 +66,7 @@ python filter_proxies.py raw_proxies.txt -t 100 --timeout 5
 |------|------|
 | `source` | 代理列表源：本地 `.txt` 路径或 URL |
 | `-o, --output` | 输出文件路径（默认自动生成 `<源名>_https.txt`） |
-| `-t, --threads` | 测试线程数（默认 75） |
+| `-t, --threads` | 测试线程数（默认 250） |
 | `--timeout` | 请求超时秒数（默认 3） |
 
 ## 运行效果
