@@ -2,11 +2,22 @@ import sys
 import os
 import argparse
 import threading
+import urllib3
 from datetime import datetime
 
 import requests
 
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
 timeout = 3
+PROXIES_DIR = 'proxies'
+TEST_URL = 'https://www.baidu.com/'
+
+active_proxies = []
+active_lock = threading.Lock()
+count = 0
+count_lock = threading.Lock()
+total_proxies = 0
 
 
 def load_proxies(source: str) -> list[str]:
@@ -30,31 +41,26 @@ def pbar(n: int, total: int) -> str:
     return f'\r{n}/{total} [{"━" * filled}{" " * (30 - filled)}]'
 
 
-active_proxies = []
-count = 0
-count_lock = threading.Lock()
-
-
 def test_proxies(proxies: list[str], test_url: str, scheme: str) -> None:
     global count
     for proxy in proxies:
         try:
             resp = requests.get(test_url,
                                 proxies={scheme: f'{scheme}://{proxy}'},
-                                timeout=timeout)
+                                timeout=timeout,
+                                verify=False)
             if resp.status_code == 200:
-                active_proxies.append(proxy)
+                with active_lock:
+                    active_proxies.append(proxy)
         except:
             pass
         with count_lock:
             count += 1
-            if count % 100 == 0 or count == total_proxies:
-                print(f'{pbar(count, total_proxies)} {100*count/total_proxies:.1f}%   ', end='')
+            c = count
+        # print outside lock to reduce contention
+        if c % 100 == 0 or c == total_proxies:
+            print(f'{pbar(c, total_proxies)} {100*c/total_proxies:.1f}%   ', end='')
 
-
-TEST_URL = 'https://www.baidu.com/'
-
-PROXIES_DIR = 'proxies'
 
 def main():
     parser = argparse.ArgumentParser(description='Filter HTTPS-supporting proxies from a list')
