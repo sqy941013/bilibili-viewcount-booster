@@ -43,23 +43,26 @@ def pbar(n: int, total: int) -> str:
 
 def test_proxies(proxies: list[str], test_url: str, scheme: str) -> None:
     global count
-    for proxy in proxies:
-        try:
-            resp = requests.get(test_url,
-                                proxies={scheme: f'{scheme}://{proxy}'},
-                                timeout=timeout,
-                                verify=False)
-            if resp.status_code == 200:
-                with active_lock:
-                    active_proxies.append(proxy)
-        except:
-            pass
-        with count_lock:
-            count += 1
-            c = count
-        # print outside lock to reduce contention
-        if c % 100 == 0 or c == total_proxies:
-            print(f'{pbar(c, total_proxies)} {100*c/total_proxies:.1f}%   ', end='')
+    session = requests.Session()
+    try:
+        for proxy in proxies:
+            try:
+                resp = session.get(test_url,
+                                   proxies={scheme: f'{scheme}://{proxy}'},
+                                   timeout=(timeout, timeout),  # (connect, read)
+                                   verify=False)
+                if resp.status_code == 200:
+                    with active_lock:
+                        active_proxies.append(proxy)
+            except:
+                pass
+            with count_lock:
+                count += 1
+                c = count
+            if c % 100 == 0 or c == total_proxies:
+                print(f'{pbar(c, total_proxies)} {100*c/total_proxies:.1f}%   ', end='')
+    finally:
+        session.close()
 
 
 def main():
