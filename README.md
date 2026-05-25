@@ -42,7 +42,29 @@ python booster.py BV1ZxGj6kEVh 100 https://example.com/proxies.txt
 
 # 使用本地代理文件
 python booster.py BV1ZxGj6kEVh 100 proxies.txt
+
+# 使用 proxy_pool（本地部署，自动获取 HTTPS 代理）
+python booster.py BV1ZxGj6kEVh 100 --proxypool
+python booster.py BV1ZxGj6kEVh 100 --proxypool http://10.0.0.1:5010
 ```
+
+## 部署 proxy_pool（可选）
+
+使用 [jhao104/proxy_pool](https://github.com/jhao104/proxy_pool) 作为代理源，自动从多个免费采集器获取 HTTPS 代理，无需手动过滤。
+
+```bash
+# 一键启动 Redis + proxy_pool
+cd docker
+docker compose up -d
+
+# 等待采集器获取代理（约 1-2 分钟）
+docker compose logs -f proxy_pool
+
+# 验证代理池是否就绪
+curl http://127.0.0.1:5010/get/
+```
+
+proxy_pool 会持续从内置采集器拉取代理，`booster.py` 通过 `--proxypool` 直接调用 `/get_all/` 获取所有已验证的 HTTPS 代理，跳过本地过滤步骤。
 
 ### filter_proxies.py
 
