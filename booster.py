@@ -6,10 +6,12 @@ import logging
 import threading
 import random
 import urllib3
-from time import sleep
+import hashlib
+from time import sleep, time as ts
 from collections import Counter
 from typing import Optional
 from datetime import date, datetime, timedelta
+from urllib.parse import urlencode
 
 try:
     from curl_cffi import requests as cffi_requests
@@ -23,6 +25,104 @@ from requests.exceptions import RequestException
 from fake_useragent import UserAgent
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+# ============================================================
+# WBI signature
+# ============================================================
+WBI_IMG_SUB_KEYS = (
+    'ac' 'dH' 'Qk' 'gN' 'cJ' 'rY' 'sK' 'uE' 'wT' 'iP' 'oA' 'xZ' 'fB' 'vM'
+    'hL' 'jW' 'kR' 'mS' 'nV' 'pX' 'qC' 'tU' 'yD' 'eF' 'bG' 'zI' 'aO' '1w'
+    '2x' '3y' '4z' '5a' '6b' '7c' '8d' '9e' '0f' 'Wn' 'Yr' 'Uq' 'Sp' 'Qo'
+    'Rn' 'Mm' 'Lk' 'Jj' 'Hi' 'Gf' 'Fd' 'Ea' 'Cb' 'Dc' 'Be' 'Ad' 'Zf' 'Ye'
+    'Xh' 'Wi' 'Vj' 'Uk' 'Tl' 'Sm' 'Rn' 'Po' 'Op' 'Nq' 'Mr' 'Ls' 'Kt' 'Ju'
+    'Iv' 'Hw' 'Gx' 'Fy' 'Ez' 'FA' 'GB' 'HC' 'ID' 'JE' 'KF' 'LG' 'MH' 'NI'
+    'OJ' 'PK' 'QL' 'RM' 'SN' 'TO' 'UP' 'VQ' 'WR' 'XS' 'YT' 'ZU' 'AV' 'BW'
+    'CX' 'DY' 'EZ' 'aA' 'bB' 'cC' 'dD' 'eE' 'fF' 'gG' 'hH' 'iI' 'jJ' 'kK'
+    'lL' 'mM' 'nN' 'oO' 'pP' 'qQ' 'rR' 'sS' 'tT' 'uU' 'vV' 'wW' 'xX' 'yY' 'zZ'
+)
+
+# Fixed 32 positions for mixin key extraction
+WBI_SHUFFLE_MAP = [46, 47, 18, 2, 53, 8, 23, 32, 15, 50, 10, 31, 58, 3, 45, 35,
+                   27, 43, 5, 49, 33, 9, 42, 19, 29, 28, 14, 39, 12, 38, 41, 13]
+
+
+_wbi_mixin_key: Optional[str] = None
+_wbi_lock = threading.Lock()
+
+
+def _extract_key(url: str) -> str:
+    """Extract key from img/sub URL, e.g. 'https://i0.hdslb.com/bfs/wbi/abc.png' -> 'abc'."""
+    return url.split('/')[-1].rsplit('.', 1)[0]
+
+
+def fetch_wbi_keys() -> tuple[str, str]:
+    """Fetch WBI img_key and sub_key from nav API."""
+    try:
+        r = requests.get(
+            'https://api.bilibili.com/x/web-interface/nav',
+            headers={'User-Agent': UserAgent().random},
+            timeout=10,
+        )
+        d = r.json()
+        data = d.get('data') or {}
+        img_url = data.get('wbi_img', {}).get('img_url', '')
+        sub_url = data.get('wbi_img', {}).get('sub_url', '')
+        if img_url and sub_url:
+            return _extract_key(img_url), _extract_key(sub_url)
+    except:
+        pass
+    return '', ''
+
+
+def get_wbi_mixin_key() -> str:
+    """Get cached mixin key, refreshing if needed."""
+    global _wbi_mixin_key
+    with _wbi_lock:
+        if _wbi_mixin_key:
+            return _wbi_mixin_key
+        img_key, sub_key = fetch_wbi_keys()
+        if not img_key or not sub_key:
+            _wbi_mixin_key = ''
+            return ''
+        raw = img_key + sub_key
+        _wbi_mixin_key = ''.join(raw[i] for i in WBI_SHUFFLE_MAP)
+        return _wbi_mixin_key
+
+
+def wbi_sign(params: dict) -> dict:
+    """Add wts (timestamp) and w_rid (signature) to params dict in-place."""
+    mixin = get_wbi_mixin_key()
+    if not mixin:
+        return params
+    params['wts'] = str(int(ts()))
+    query = urlencode(dict(sorted(params.items())))
+    params['w_rid'] = hashlib.md5(f'{query}{mixin}'.encode()).hexdigest()
+    return params
+
+
+# ============================================================
+# Full cookie fetching
+# ============================================================
+def fetch_full_cookies() -> dict[str, str]:
+    """Visit bilibili.com homepage to get the full cookie chain."""
+    cookies = {}
+    try:
+        r = requests.get(
+            'https://www.bilibili.com/',
+            headers={'User-Agent': UserAgent().random},
+            timeout=10,
+            allow_redirects=True,
+        )
+        for k, v in r.cookies.items():
+            cookies[k] = v
+    except:
+        pass
+    return cookies
+
+
+# ============================================================
+# Browser impersonation
+# ============================================================
 
 # Browser impersonation targets (JA3 + HTTP/2 fingerprints)
 # Verified with curl_cffi 0.15.0
@@ -59,17 +159,28 @@ def fetch_buvid_from_api() -> tuple[str, str]:
 
 
 def make_session(session, bv: str, ua: Optional[str] = None) -> None:
-    """Set up session headers for bilibili."""
+    """Set up session headers for bilibili with full cookie chain."""
     session.verify = False
     if ua:
         session.headers['User-Agent'] = ua
     else:
         session.headers['User-Agent'] = UserAgent().random
+
     buvid3, buvid4 = fetch_buvid_from_api()
     if not buvid3 or not buvid4:
         buvid3, buvid4 = gen_buvid()
+
+    # Build full cookie string from cached cookies + buvids
+    cookie_parts = []
+    if _bilibili_cookies:
+        for k, v in _bilibili_cookies.items():
+            cookie_parts.append(f'{k}={v}')
+    cookie_parts.append(f'buvid3={buvid3}')
+    cookie_parts.append(f'buvid4={buvid4}')
+    cookie_parts.append(f'b_nut={int(ts())}')
+
     session.headers['Referer'] = f'https://www.bilibili.com/video/{bv}/'
-    session.headers['Cookie'] = f'buvid3={buvid3}; buvid4={buvid4}'
+    session.headers['Cookie'] = '; '.join(cookie_parts)
 
 
 def make_browser_session(**kwargs) -> cffi_requests.Session:
@@ -103,13 +214,16 @@ def send_heartbeat(session, info: dict, bv: str, timeout: int, played_time: int 
 def simulate_player(session, info: dict, bv: str, timeout: int) -> bool:
     """Simulate fetching video stream URLs like a real browser player."""
     try:
+        params1 = {'aid': info['aid'], 'cid': info['cid'], 'bvid': bv,
+                   'qn': 80, 'fnval': 16, 'fourk': 1}
+        wbi_sign(params1)
         session.get('https://api.bilibili.com/x/player/playurl',
-                    params={'aid': info['aid'], 'cid': info['cid'], 'bvid': bv,
-                            'qn': 80, 'fnval': 16, 'fourk': 1},
-                    timeout=timeout)
+                    params=params1, timeout=timeout)
+
+        params2 = {'aid': info['aid'], 'cid': info['cid'], 'bvid': bv}
+        wbi_sign(params2)
         session.get('https://api.bilibili.com/x/player/v2',
-                    params={'aid': info['aid'], 'cid': info['cid'], 'bvid': bv},
-                    timeout=timeout)
+                    params=params2, timeout=timeout)
         return True
     except:
         return False
@@ -315,6 +429,7 @@ def build_view_params(video_id: str) -> dict[str, str]:
 def fetch_video_info(video_id: str) -> dict:
     """Fetch video metadata and ensure API response is valid."""
     params = build_view_params(video_id)
+    wbi_sign(params)
     response = requests.get(
         'https://api.bilibili.com/x/web-interface/view',
         params=params,
@@ -399,6 +514,23 @@ def pbar(n: int, total: int, hits: Optional[int], view_increase: Optional[int]) 
         return f'\r{pct} [{progress}{blank}]'
     else:
         return f'\r{pct} [{progress}{blank}] Hits: {hits} | +{view_increase}'
+
+# 0.init: fetch bilibili cookies and WBI keys
+_bilibili_cookies: dict = {}
+print()
+print('fetching bilibili cookies from www.bilibili.com ...')
+_bilibili_cookies = fetch_full_cookies()
+if _bilibili_cookies:
+    print(f'got cookies: {list(_bilibili_cookies.keys())}')
+else:
+    print('failed to fetch cookies, will use fallback values')
+
+print('fetching WBI signing keys ...')
+wbi_mixin = get_wbi_mixin_key()
+if wbi_mixin:
+    print('WBI signature ready')
+else:
+    print('WARNING: WBI signature unavailable, requests may be rate-limited')
 
 # 1.get proxy
 print()
