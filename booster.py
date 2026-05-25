@@ -30,8 +30,6 @@ BROWSER_TARGETS = [
     'safari15_5', 'safari17_0', 'safari17_2_ios', 'safari18_0',
     # Edge
     'edge120', 'edge131',
-    # Firefox
-    'firefox120', 'firefox133',
 ]
 
 
@@ -515,9 +513,9 @@ if residential_gateway:
                 if resp.status_code < 400:
                     total_successful_hits += 1
             return True
-        except cffi_requests.Timeout:
+        except requests.exceptions.Timeout:
             failure_counter['Connection timeout'] += 1
-        except cffi_requests.ConnectionError as e:
+        except requests.exceptions.ConnectionError as e:
             reason = str(e).lower()
             if 'refused' in reason:
                 failure_counter['Connection refused'] += 1
@@ -584,9 +582,9 @@ else:
                 if resp.status_code < 400:
                     total_successful_hits += 1
                     round_hits += 1
-        except cffi_requests.Timeout:
+        except requests.exceptions.Timeout:
             failure_counter['Connection timeout'] += 1
-        except cffi_requests.ConnectionError as e:
+        except requests.exceptions.ConnectionError as e:
             reason = str(e).lower()
             if 'refused' in reason:
                 failure_counter['Connection refused'] += 1
