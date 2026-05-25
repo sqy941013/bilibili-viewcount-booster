@@ -511,7 +511,7 @@ else:
             session.proxies.update(proxy_conf)
             make_session(session, bv)
             session.get(f'https://www.bilibili.com/video/{bv}/', timeout=watch_time + 5)
-            sleep(1)
+            sleep(watch_time)
             send_heartbeat(session, info, bv, timeout)
             resp = session.post('https://api.bilibili.com/x/click-interface/click/web/h5',
                           timeout=timeout,
