@@ -8,3 +8,6 @@ dist
 
 # Filtered proxy lists
 proxies/
+
+# Booster logs
+logs/
