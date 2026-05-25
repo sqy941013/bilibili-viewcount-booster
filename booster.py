@@ -353,20 +353,31 @@ total_attempted = 0
 failure_counter = Counter()
 
 if brightdata_gateway:
-    # BrightData: continuous requests, each one gets a new IP, no waiting
+    watch_time = 10  # seconds to "watch" before view counts
+    bd_proxy = {'https': f'https://{brightdata_auth}@{brightdata_gateway}'}
+
     while True:
         info = fetch_video_info(bv)
         current = info['stat']['view']
         if current >= target:
             print(f'{pbar(target, target, total_successful_hits, current - initial_view_count)} done                 ', end='')
             break
-        print(f'{pbar(current, target, total_successful_hits, current - initial_view_count)} request #{total_attempted + 1} (IP auto-rotated)   ', end='')
+
+        old_views = current
+        print(f'{pbar(current, target, total_successful_hits, current - initial_view_count)} request #{total_attempted + 1} (watching {watch_time}s)   ', end='')
+
         try:
-            resp = requests.post('https://api.bilibili.com/x/click-interface/click/web/h5',
-                          proxies={'https': f'https://{brightdata_auth}@{brightdata_gateway}'},
-                          headers={'User-Agent': UserAgent().random},
+            # Step 1: visit video page for 10 seconds (simulates actual watch)
+            session = requests.Session()
+            session.proxies.update(bd_proxy)
+            session.verify = False
+            session.headers['User-Agent'] = UserAgent().random
+            session.get(f'https://www.bilibili.com/video/{bv}/', timeout=watch_time + 5)
+            sleep(watch_time)
+
+            # Step 2: send click API request
+            resp = session.post('https://api.bilibili.com/x/click-interface/click/web/h5',
                           timeout=timeout,
-                          verify=False,
                           data={
                               'aid': info['aid'],
                               'cid': info['cid'],
@@ -377,6 +388,8 @@ if brightdata_gateway:
                               'type': info['desc_v2'][0]['type'] if info['desc_v2'] else '1',
                               'sub_type': '0'
                           })
+            session.close()
+
             if resp.status_code >= 400:
                 failure_counter[f'HTTP {resp.status_code}'] += 1
             else:
