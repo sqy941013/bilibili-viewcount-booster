@@ -511,7 +511,7 @@ if residential_gateway:
             session = make_browser_session()
             session.proxies.update(get_residential_proxy_for_round())
             make_session(session, bv)
-            session.get(f'https://www.bilibili.com/video/{bv}/', timeout=watch_time + 5)
+            # Skip heavy video page HTML, go straight to player APIs
             simulate_player(session, info, bv, timeout)
             sleep(watch_time)
             send_heartbeat(session, info, bv, timeout, played_time=watch_time)
