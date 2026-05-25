@@ -35,6 +35,18 @@ def gen_buvid() -> tuple[str, str]:
     return buvid3, buvid4
 
 
+def fetch_buvid_from_api() -> tuple[str, str]:
+    """Fetch real buvid fingerprints from bilibili's fingerprint API."""
+    try:
+        r = requests.get('https://api.bilibili.com/x/frontend/finger/spi', timeout=10)
+        d = r.json()
+        if d.get('code') == 0 and d.get('data'):
+            return d['data'].get('b_3', ''), d['data'].get('b_4', '')
+    except:
+        pass
+    return '', ''
+
+
 def make_session(session, bv: str, ua: Optional[str] = None) -> None:
     """Set up session headers for bilibili."""
     session.verify = False
@@ -42,7 +54,9 @@ def make_session(session, bv: str, ua: Optional[str] = None) -> None:
         session.headers['User-Agent'] = ua
     else:
         session.headers['User-Agent'] = UserAgent().random
-    buvid3, buvid4 = gen_buvid()
+    buvid3, buvid4 = fetch_buvid_from_api()
+    if not buvid3 or not buvid4:
+        buvid3, buvid4 = gen_buvid()
     session.headers['Referer'] = f'https://www.bilibili.com/video/{bv}/'
     session.headers['Cookie'] = f'buvid3={buvid3}; buvid4={buvid4}'
 
