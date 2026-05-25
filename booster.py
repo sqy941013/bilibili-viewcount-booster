@@ -294,20 +294,30 @@ if proxypool_url:
 elif not residential_gateway:
     active_proxies = []
     count = 0
+    filter_ok = 0
+    filter_fail = 0
+    filter_lock = threading.Lock()
     def filter_proxys(proxies: 'list[str]') -> None:
-        global count
+        global count, filter_ok, filter_fail
         for proxy in proxies:
-            count = count + 1
             try:
                 scheme = 'socks5' if proxy_type == 'socks5' else 'http'
                 requests.post('http://httpbin.org/post',
                               proxies={scheme: f'{scheme}://'+proxy},
                               timeout=timeout)
                 active_proxies.append(proxy)
+                with filter_lock:
+                    filter_ok += 1
             except:  # proxy connect timeout
-                pass
-            if count % 100 == 0 or count == len(total_proxies):
-                print(f'{pbar(count, len(total_proxies), hits=None, view_increase=None)} {100*count/len(total_proxies):.1f}%   ', end='')
+                with filter_lock:
+                    filter_fail += 1
+            with filter_lock:
+                count += 1
+                c = count
+            if c % 100 == 0 or c == len(total_proxies):
+                with filter_lock:
+                    s, f = filter_ok, filter_fail
+                print(f'{pbar(c, len(total_proxies), hits=None, view_increase=None)} OK: {s} | Fail: {f} {100*c/len(total_proxies):.1f}%   ', end='')
 
     start_filter_time = datetime.now()
     print('\nfiltering active proxies using http://httpbin.org/post ...')
