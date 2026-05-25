@@ -23,13 +23,17 @@ from fake_useragent import UserAgent
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Browser impersonation targets (JA3 + HTTP/2 fingerprints)
+# Verified with curl_cffi 0.15.0
 BROWSER_TARGETS = [
     # Chrome
-    'chrome120', 'chrome124', 'chrome131', 'chrome133a',
-    # Safari
-    'safari15_5', 'safari17_0', 'safari17_2_ios', 'safari18_0',
+    'chrome100', 'chrome101', 'chrome104', 'chrome107', 'chrome110',
+    'chrome116', 'chrome119', 'chrome120', 'chrome124', 'chrome131', 'chrome133a',
     # Edge
-    'edge120', 'edge131',
+    'edge99', 'edge101',
+    # Safari (desktop + iOS)
+    'safari15_3', 'safari15_5', 'safari17_0', 'safari17_2_ios', 'safari18_0',
+    # Firefox
+    'firefox133', 'firefox135',
 ]
 
 
