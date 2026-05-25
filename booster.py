@@ -98,6 +98,21 @@ def send_heartbeat(session, info: dict, bv: str, timeout: int, played_time: int 
         return False
 
 
+def simulate_player(session, info: dict, bv: str, timeout: int) -> bool:
+    """Simulate fetching video stream URLs like a real browser player."""
+    try:
+        session.get('https://api.bilibili.com/x/player/playurl',
+                    params={'aid': info['aid'], 'cid': info['cid'], 'bvid': bv,
+                            'qn': 80, 'fnval': 16, 'fourk': 1},
+                    timeout=timeout)
+        session.get('https://api.bilibili.com/x/player/v2',
+                    params={'aid': info['aid'], 'cid': info['cid'], 'bvid': bv},
+                    timeout=timeout)
+        return True
+    except:
+        return False
+
+
 # parameters
 timeout = 3  # seconds for proxy connection timeout
 round_time = 305  # seconds for each round of view count boosting
@@ -497,6 +512,7 @@ if residential_gateway:
             session.proxies.update(get_residential_proxy_for_round())
             make_session(session, bv)
             session.get(f'https://www.bilibili.com/video/{bv}/', timeout=watch_time + 5)
+            simulate_player(session, info, bv, timeout)
             sleep(watch_time)
             send_heartbeat(session, info, bv, timeout, played_time=watch_time)
             resp = session.post('https://api.bilibili.com/x/click-interface/click/web/h5',
@@ -566,6 +582,7 @@ else:
             session.proxies.update(proxy_conf)
             make_session(session, bv)
             session.get(f'https://www.bilibili.com/video/{bv}/', timeout=watch_time + 5)
+            simulate_player(session, info, bv, timeout)
             sleep(watch_time)
             send_heartbeat(session, info, bv, timeout, played_time=watch_time)
             resp = session.post('https://api.bilibili.com/x/click-interface/click/web/h5',
