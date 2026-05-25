@@ -22,11 +22,24 @@ update_pbar_count = 10  # update view count progress bar for every xx proxies
 
 if len(sys.argv) < 3:
     print(f'Usage: python {sys.argv[0]} <BV/AV_ID> <target_views> [proxy_list_url]')
+    print(f'       python {sys.argv[0]} <BV/AV_ID> <target_views> --proxypool [url]')
     sys.exit(1)
 
 bv = sys.argv[1]  # video BV/AV id (raw input)
 target = int(sys.argv[2])  # target view count
-proxy_list_url = sys.argv[3] if len(sys.argv) > 3 else None  # optional custom proxy list .txt URL
+
+# Determine proxy source mode
+proxy_list_url = None
+proxypool_url = None
+
+if len(sys.argv) >= 4:
+    if sys.argv[3] == '--proxypool':
+        proxypool_url = sys.argv[4] if len(sys.argv) > 4 else 'http://127.0.0.1:5010'
+    else:
+        proxy_list_url = sys.argv[3]
+elif '--proxypool' in sys.argv:
+    idx = sys.argv.index('--proxypool')
+    proxypool_url = sys.argv[idx + 1] if idx + 1 < len(sys.argv) else 'http://127.0.0.1:5010'
 
 
 def fetch_from_checkerproxy(min_count: int = 100, max_lookback_days: int = 7) -> list[str]:
@@ -128,6 +141,18 @@ def fetch_from_custom_url(source: str) -> list[str]:
     return fetch_plaintext_proxy_list(source, f'custom URL: {source}')
 
 
+def fetch_from_proxypool(base_url: str) -> list[str]:
+    """Fetch HTTPS proxies from jhao104/proxy_pool."""
+    api_url = f'{base_url}/get_all/'
+    print(f'getting HTTPS proxies from proxy_pool at {api_url} ...')
+    response = requests.get(api_url, timeout=timeout + 5)
+    response.raise_for_status()
+    data = response.json()
+    proxies = [item['proxy'] for item in data if item.get('https') is True and item.get('proxy')]
+    print(f'successfully get {len(proxies)} HTTPS proxies from proxy_pool')
+    return proxies
+
+
 def build_view_params(video_id: str) -> dict[str, str]:
     """Return API query params for either BV or AV id."""
     normalized = video_id.strip()
@@ -165,6 +190,18 @@ def fetch_video_info(video_id: str) -> dict:
 
 
 def get_total_proxies() -> list[str]:
+    # Mode 1: proxy_pool (pre-vetted HTTPS proxies, no filtering needed)
+    if proxypool_url:
+        try:
+            proxies = fetch_from_proxypool(proxypool_url)
+        except Exception as err:
+            raise RuntimeError(f'proxy_pool failed: {err}')
+        if not proxies:
+            raise RuntimeError('no HTTPS proxies found in proxy_pool (is the service running?)')
+        print(f'collected {len(proxies)} proxies from proxy_pool')
+        return proxies
+
+    # Mode 2: custom file/URL
     if proxy_list_url:
         try:
             proxies = fetch_from_custom_url(proxy_list_url)
@@ -224,43 +261,48 @@ def pbar(n: int, total: int, hits: Optional[int], view_increase: Optional[int]) 
 print()
 total_proxies = get_total_proxies()
 
-# 2.filter proxies by multi-threading
+# 2.filter proxies by multi-threading (skip for proxy_pool, already vetted)
 if len(total_proxies) > 10000:
     print('more than 10000 proxies, randomly pick 10000 proxies')
     random.shuffle(total_proxies)
     total_proxies = total_proxies[:10000]
 
-active_proxies = []
-count = 0
-def filter_proxys(proxies: 'list[str]') -> None:
-    global count
-    for proxy in proxies:
-        count = count + 1
-        try:
-            requests.post('http://httpbin.org/post',
-                          proxies={'http': 'http://'+proxy},
-                          timeout=timeout)
-            active_proxies.append(proxy)
-        except:  # proxy connect timeout
-            pass
-        if count % 100 == 0 or count == len(total_proxies):
-            print(f'{pbar(count, len(total_proxies), hits=None, view_increase=None)} {100*count/len(total_proxies):.1f}%   ', end='')
+if proxypool_url:
+    # proxy_pool proxies are already vetted HTTPS
+    active_proxies = total_proxies
+    print(f'using {len(active_proxies)} proxy_pool proxies (skipping filter step)')
+else:
+    active_proxies = []
+    count = 0
+    def filter_proxys(proxies: 'list[str]') -> None:
+        global count
+        for proxy in proxies:
+            count = count + 1
+            try:
+                requests.post('http://httpbin.org/post',
+                              proxies={'http': 'http://'+proxy},
+                              timeout=timeout)
+                active_proxies.append(proxy)
+            except:  # proxy connect timeout
+                pass
+            if count % 100 == 0 or count == len(total_proxies):
+                print(f'{pbar(count, len(total_proxies), hits=None, view_increase=None)} {100*count/len(total_proxies):.1f}%   ', end='')
 
-start_filter_time = datetime.now()
-print('\nfiltering active proxies using http://httpbin.org/post ...')
-thread_proxy_num = len(total_proxies) // thread_num
-threads = []
-for i in range(thread_num):
-    # calculate the start and end index of the proxies that this thread needs to process
-    start = i * thread_proxy_num
-    end = start + thread_proxy_num if i < (thread_num - 1) else None  # the last thread processes the remaining proxies
-    thread = threading.Thread(target=filter_proxys, args=(total_proxies[start:end],))
-    thread.start()
-    threads.append(thread)
-for thread in threads:
-    thread.join()  # wait for all threads to finish
-filter_cost_seconds = int((datetime.now()-start_filter_time).total_seconds())
-print(f'\nsuccessfully filter {len(active_proxies)} active proxies using {time(filter_cost_seconds)}')
+    start_filter_time = datetime.now()
+    print('\nfiltering active proxies using http://httpbin.org/post ...')
+    thread_proxy_num = len(total_proxies) // thread_num
+    threads = []
+    for i in range(thread_num):
+        # calculate the start and end index of the proxies that this thread needs to process
+        start = i * thread_proxy_num
+        end = start + thread_proxy_num if i < (thread_num - 1) else None  # the last thread processes the remaining proxies
+        thread = threading.Thread(target=filter_proxys, args=(total_proxies[start:end],))
+        thread.start()
+        threads.append(thread)
+    for thread in threads:
+        thread.join()  # wait for all threads to finish
+    filter_cost_seconds = int((datetime.now()-start_filter_time).total_seconds())
+    print(f'\nsuccessfully filter {len(active_proxies)} active proxies using {time(filter_cost_seconds)}')
 
 # 3.boost view count
 print(f'\nstart boosting {bv} at {datetime.now().strftime("%H:%M:%S")}')
