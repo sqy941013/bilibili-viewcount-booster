@@ -67,7 +67,9 @@ if len(sys.argv) < 3:
     print(f'       python {sys.argv[0]} <BV/AV_ID> <target_views> --proxypool [url]')
     print(f'       python {sys.argv[0]} <BV/AV_ID> <target_views> --residential <gateway:port> <user:pass>')
     print(f'       python {sys.argv[0]} <BV/AV_ID> <target_views> --proxytype http|socks5  (default: http)')
-    print(f'       python {sys.argv[0]} <BV/AV_ID> <target_views> --threads N  (default: 75)')
+    print(f'       python {sys.argv[0]} <BV/AV_ID> <target_views> --threads N  (default: 75, filter concurrency)')
+    print(f'       python {sys.argv[0]} <BV/AV_ID> <target_views> --boost-threads N  (default: 1, boosting concurrency)')
+    print(f'       python {sys.argv[0]} <BV/AV_ID> <target_views> --watch-range MIN MAX  (default: 10 20, random watch seconds)')
     sys.exit(1)
 
 bv = sys.argv[1]  # video BV/AV id (raw input)
@@ -80,6 +82,9 @@ residential_gateway = None  # e.g. gate.smartproxy.io:7000
 residential_auth = None     # e.g. username:password
 proxy_type = 'http'         # http or socks5
 thread_num = 75             # thread count for filtering
+boost_threads = 1           # thread count for boosting
+watch_time_min = 10         # minimum watch seconds
+watch_time_max = 20         # maximum watch seconds
 
 i = 3
 while i < len(sys.argv):
@@ -96,6 +101,13 @@ while i < len(sys.argv):
     elif sys.argv[i] == '--threads':
         thread_num = int(sys.argv[i + 1])
         i += 2
+    elif sys.argv[i] == '--boost-threads':
+        boost_threads = int(sys.argv[i + 1])
+        i += 2
+    elif sys.argv[i] == '--watch-range':
+        watch_time_min = int(sys.argv[i + 1])
+        watch_time_max = int(sys.argv[i + 2])
+        i += 3
     else:
         proxy_list_url = sys.argv[i]
         i += 1
@@ -414,34 +426,24 @@ round_num = 0
 total_successful_hits = 0
 total_attempted = 0
 failure_counter = Counter()
+stats_lock = threading.Lock()
 
 if residential_gateway:
-    watch_time = 10  # seconds to "watch" before view counts
     scheme = 'socks5' if proxy_type == 'socks5' else 'https'
     bd_proxy = {scheme: f'{scheme}://{residential_auth}@{residential_gateway}'}
+    boost_round = 0
 
-    while True:
-        info = fetch_video_info(bv)
-        current = info['stat']['view']
-        if current >= target:
-            print(f'{pbar(target, target, total_successful_hits, current - initial_view_count)} done                 ', end='')
-            break
-
-        print(f'{pbar(current, target, total_successful_hits, current - initial_view_count)} request #{total_attempted + 1} (watching {watch_time}s)   ', end='')
-
+    def do_boost_residential() -> bool:
+        """One boosting attempt for residential proxy. Returns True if hit."""
+        global total_successful_hits, total_attempted
+        watch_time = random.randint(watch_time_min, watch_time_max)
         try:
             session = requests.Session()
             session.proxies.update(bd_proxy)
             make_session(session, bv)
-
-            # Step 1: visit video page
             session.get(f'https://www.bilibili.com/video/{bv}/', timeout=watch_time + 5)
             sleep(watch_time)
-
-            # Step 2: send heartbeat (simulates active viewing)
             send_heartbeat(session, info, bv, timeout)
-
-            # Step 3: send click API
             resp = session.post('https://api.bilibili.com/x/click-interface/click/web/h5',
                           timeout=timeout,
                           data={
@@ -455,11 +457,11 @@ if residential_gateway:
                               'sub_type': '0'
                           })
             session.close()
-
-            if resp.status_code >= 400:
-                failure_counter[f'HTTP {resp.status_code}'] += 1
-            else:
-                total_successful_hits += 1
+            with stats_lock:
+                total_attempted += 1
+                if resp.status_code < 400:
+                    total_successful_hits += 1
+            return True
         except requests.exceptions.Timeout:
             failure_counter['Connection timeout'] += 1
         except requests.exceptions.ConnectionError as e:
@@ -472,72 +474,97 @@ if residential_gateway:
                 failure_counter['Connection error'] += 1
         except Exception:
             failure_counter['Other error'] += 1
-        total_attempted += 1
+        with stats_lock:
+            total_attempted += 1
+        return False
+
+    while True:
+        info = fetch_video_info(bv)
+        current = info['stat']['view']
+        if current >= target:
+            print(f'{pbar(target, target, total_successful_hits, current - initial_view_count)} done                 ', end='')
+            break
+
+        watch_display = f'{watch_time_min}-{watch_time_max}s'
+        print(f'{pbar(current, target, total_successful_hits, current - initial_view_count)} round {boost_round + 1} ({boost_threads} threads, watching {watch_display})   ', end='')
+
+        threads = []
+        for _ in range(boost_threads):
+            t = threading.Thread(target=do_boost_residential)
+            t.start()
+            threads.append(t)
+        for t in threads:
+            t.join()
+
+        boost_round += 1
 else:
+    proxy_index = threading.Semaphore(boost_threads)
+
+    def do_boost_proxy(proxy: str) -> bool:
+        """One boosting attempt for a proxy."""
+        global total_successful_hits, total_attempted
+        watch_time = random.randint(watch_time_min, watch_time_max)
+        proxy_scheme = 'socks5' if proxy_type == 'socks5' else 'https'
+        proxy_conf = {proxy_scheme: f'{proxy_scheme}://{proxy}'}
+        try:
+            session = requests.Session()
+            session.proxies.update(proxy_conf)
+            make_session(session, bv)
+            session.get(f'https://www.bilibili.com/video/{bv}/', timeout=watch_time + 5)
+            sleep(1)
+            send_heartbeat(session, info, bv, timeout)
+            resp = session.post('https://api.bilibili.com/x/click-interface/click/web/h5',
+                          timeout=timeout,
+                          data={
+                              'aid': info['aid'],
+                              'cid': info['cid'],
+                              'bvid': bv,
+                              'part': '1',
+                              'mid': info['owner']['mid'],
+                              'jsonp': 'jsonp',
+                              'type': info['desc_v2'][0]['type'] if info['desc_v2'] else '1',
+                              'sub_type': '0'
+                          })
+            session.close()
+            with stats_lock:
+                total_attempted += 1
+                if resp.status_code < 400:
+                    total_successful_hits += 1
+                    round_hits += 1
+        except requests.exceptions.Timeout:
+            failure_counter['Connection timeout'] += 1
+        except requests.exceptions.ConnectionError as e:
+            reason = str(e).lower()
+            if 'refused' in reason:
+                failure_counter['Connection refused'] += 1
+            elif 'timed out' in reason:
+                failure_counter['Connection timed out'] += 1
+            else:
+                failure_counter['Connection error'] += 1
+        except Exception:
+            failure_counter['Other error'] += 1
+        with stats_lock:
+            total_attempted += 1
+        proxy_index.release()
+
     while True:
         reach_target = False
         start_time = datetime.now()
         round_hits = 0
 
-        # send viewing simulation for each proxy
+        # send viewing simulation for each proxy with concurrency limit
         for i, proxy in enumerate(active_proxies):
-            try:
-                if i % update_pbar_count == 0:  # update progress bar
-                    info = fetch_video_info(bv)
-                    current = info['stat']['view']
-                    if current >= target:
-                        reach_target = True
-                        print(f'{pbar(target, target, total_successful_hits, current - initial_view_count)} done                 ', end='')
-                        break
+            if i % update_pbar_count == 0:  # update progress bar
+                info = fetch_video_info(bv)
+                current = info['stat']['view']
+                if current >= target:
+                    reach_target = True
+                    print(f'{pbar(target, target, total_successful_hits, current - initial_view_count)} done                 ', end='')
+                    break
 
-                proxy_scheme = 'socks5' if proxy_type == 'socks5' else 'https'
-                proxy_conf = {
-                    proxy_scheme: f'{proxy_scheme}://{proxy}',
-                }
-
-                session = requests.Session()
-                session.proxies.update(proxy_conf)
-                make_session(session, bv)
-
-                # Step 1: visit video page
-                session.get(f'https://www.bilibili.com/video/{bv}/', timeout=timeout + 5)
-                sleep(1)
-
-                # Step 2: send heartbeat
-                send_heartbeat(session, info, bv, timeout)
-
-                # Step 3: send click API
-                resp = session.post('https://api.bilibili.com/x/click-interface/click/web/h5',
-                              timeout=timeout,
-                              data={
-                                  'aid': info['aid'],
-                                  'cid': info['cid'],
-                                  'bvid': bv,
-                                  'part': '1',
-                                  'mid': info['owner']['mid'],
-                                  'jsonp': 'jsonp',
-                                  'type': info['desc_v2'][0]['type'] if info['desc_v2'] else '1',
-                                  'sub_type': '0'
-                              })
-                session.close()
-                if resp.status_code >= 400:
-                    failure_counter[f'HTTP {resp.status_code}'] += 1
-                else:
-                    round_hits += 1
-                    total_successful_hits += 1
-            except requests.exceptions.Timeout:
-                failure_counter['Connection timeout'] += 1
-            except requests.exceptions.ConnectionError as e:
-                reason = str(e).lower()
-                if 'refused' in reason:
-                    failure_counter['Connection refused'] += 1
-                elif 'timed out' in reason:
-                    failure_counter['Connection timed out'] += 1
-                else:
-                    failure_counter['Connection error'] += 1
-            except Exception as e:
-                failure_counter['Other error'] += 1
-            total_attempted += 1
+            proxy_index.acquire()
+            t = threading.Thread(target=do_boost_proxy, args=(proxy,))
+            t.start()
 
             # update progress bar every update_pbar_count proxies
             if (i + 1) % update_pbar_count == 0:
