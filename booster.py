@@ -587,6 +587,10 @@ if residential_gateway:
         # Staggered start: each worker begins at a random offset within 60s
         sleep(random.uniform(0, 60))
         while True:
+            with cooldown_lock:
+                if datetime.now() < cooldown_end_time:
+                    sleep(5)
+                    continue
             with stats_lock:
                 if info['stat']['view'] >= target:
                     return
@@ -599,9 +603,17 @@ if residential_gateway:
             jitter = random.uniform(-base * 0.3, base * 0.3)
             sleep(max(5, base + jitter))
 
+    # Cooldown tracking: trigger 5-min cooldown when 30 consecutive hits don't increase views
+    consecutive_hits_without_increase = 0
+    hits_at_last_check = total_successful_hits
+    last_view_for_cooldown = initial_view_count
+    cooldown_end_time = datetime.min
+    cooldown_lock = threading.Lock()
+
     # Launch independent worker threads
     boost_round = 0
     print(f'boost mode: {boost_threads} independent workers, requests distributed over 60s window')
+    print('cooldown: 5 min pause after 30 consecutive hits without view increase')
     workers = []
     for i in range(boost_threads):
         t = threading.Thread(target=boost_worker, args=(i,), daemon=True)
@@ -610,12 +622,37 @@ if residential_gateway:
 
     # Main loop: periodically check and update progress
     while True:
+        # Check if still in cooldown
+        with cooldown_lock:
+            if datetime.now() < cooldown_end_time:
+                remaining = int((cooldown_end_time - datetime.now()).total_seconds())
+                print(f'\n🧊 Cooldown active: {remaining}s remaining           ', end='')
+                sleep(10)
+                continue
+
         info = fetch_video_info(bv)
         current = info['stat']['view']
         if current >= target:
             logger.info(f'DONE! Final views: {current} (target: {target})')
             print(f'{pbar(target, target, total_successful_hits, current - initial_view_count)} done                 ', end='')
             break
+
+        with cooldown_lock:
+            if current > last_view_for_cooldown:
+                consecutive_hits_without_increase = 0
+                last_view_for_cooldown = current
+            else:
+                new_hits = total_successful_hits - hits_at_last_check
+                consecutive_hits_without_increase += new_hits
+
+            if consecutive_hits_without_increase >= 30:
+                logger.info(f'Cooldown triggered: {consecutive_hits_without_increase} consecutive hits without view increase, pausing 5 min')
+                print(f'\n⏸️  Cooldown: {consecutive_hits_without_increase} consecutive hits without view increase, waiting 5 minutes...', end='')
+                cooldown_end_time = datetime.now() + timedelta(minutes=5)
+                consecutive_hits_without_increase = 0
+                last_view_for_cooldown = current
+
+            hits_at_last_check = total_successful_hits
 
         logger.info(f'current_views={current} target={target} '
                    f'increase={current - initial_view_count} hits={total_successful_hits} '
