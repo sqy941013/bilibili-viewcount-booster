@@ -11,7 +11,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 timeout = 3
 PROXIES_DIR = 'proxies'
-TEST_URL = 'https://www.baidu.com/'
+TEST_URL = 'https://1.1.1.1/'
 
 active_proxies = []
 active_lock = threading.Lock()
