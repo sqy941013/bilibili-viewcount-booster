@@ -165,6 +165,16 @@ def fetch_video_info(video_id: str) -> dict:
 
 
 def get_total_proxies() -> list[str]:
+    if proxy_list_url:
+        try:
+            proxies = fetch_from_custom_url(proxy_list_url)
+        except Exception as err:
+            raise RuntimeError(f'custom proxy source failed: {err}')
+        if not proxies:
+            raise RuntimeError('no proxies found in custom source')
+        print(f'collected {len(proxies)} proxies from custom source')
+        return proxies
+
     fetchers = [
         ('checkerproxy', fetch_from_checkerproxy),
         ('proxyscrape', fetch_from_proxyscrape),
@@ -173,8 +183,6 @@ def get_total_proxies() -> list[str]:
         ('speedx', fetch_from_speedx),
         ('monosans', fetch_from_monosans),
     ]
-    if proxy_list_url:
-        fetchers.insert(0, ('custom_url', lambda: fetch_from_custom_url(proxy_list_url)))
     all_proxies: set[str] = set()
     for name, fetcher in fetchers:
         try:
