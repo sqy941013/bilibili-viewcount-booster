@@ -59,7 +59,6 @@ def send_heartbeat(session, info: dict, bv: str, timeout: int) -> bool:
 
 # parameters
 timeout = 3  # seconds for proxy connection timeout
-thread_num = 75  # thread count for filtering active proxies
 round_time = 305  # seconds for each round of view count boosting
 update_pbar_count = 10  # update view count progress bar for every xx proxies
 
@@ -68,6 +67,7 @@ if len(sys.argv) < 3:
     print(f'       python {sys.argv[0]} <BV/AV_ID> <target_views> --proxypool [url]')
     print(f'       python {sys.argv[0]} <BV/AV_ID> <target_views> --residential <gateway:port> <user:pass>')
     print(f'       python {sys.argv[0]} <BV/AV_ID> <target_views> --proxytype http|socks5  (default: http)')
+    print(f'       python {sys.argv[0]} <BV/AV_ID> <target_views> --threads N  (default: 75)')
     sys.exit(1)
 
 bv = sys.argv[1]  # video BV/AV id (raw input)
@@ -79,6 +79,7 @@ proxypool_url = None
 residential_gateway = None  # e.g. gate.smartproxy.io:7000
 residential_auth = None     # e.g. username:password
 proxy_type = 'http'         # http or socks5
+thread_num = 75             # thread count for filtering
 
 i = 3
 while i < len(sys.argv):
@@ -91,6 +92,9 @@ while i < len(sys.argv):
         i += 3
     elif sys.argv[i] == '--proxytype':
         proxy_type = sys.argv[i + 1].lower()
+        i += 2
+    elif sys.argv[i] == '--threads':
+        thread_num = int(sys.argv[i + 1])
         i += 2
     else:
         proxy_list_url = sys.argv[i]
