@@ -22,9 +22,16 @@ from fake_useragent import UserAgent
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-# Chrome impersonation targets (JA3 + HTTP/2 fingerprints)
-CHROME_TARGETS = [
+# Browser impersonation targets (JA3 + HTTP/2 fingerprints)
+BROWSER_TARGETS = [
+    # Chrome
     'chrome120', 'chrome124', 'chrome131', 'chrome133a',
+    # Safari
+    'safari15_5', 'safari17_0', 'safari17_2_ios', 'safari18_0',
+    # Edge
+    'edge120', 'edge131',
+    # Firefox
+    'firefox120', 'firefox133',
 ]
 
 
@@ -63,7 +70,7 @@ def make_session(session, bv: str, ua: Optional[str] = None) -> None:
 
 def make_browser_session(**kwargs) -> cffi_requests.Session:
     """Create a session that impersonates a real Chrome browser."""
-    target = random.choice(CHROME_TARGETS)
+    target = random.choice(BROWSER_TARGETS)
     return cffi_requests.Session(impersonate=target, **kwargs)
 
 
