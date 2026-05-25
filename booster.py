@@ -269,7 +269,12 @@ def pbar(n: int, total: int, hits: Optional[int], view_increase: Optional[int]) 
 
 # 1.get proxy
 print()
-total_proxies = get_total_proxies()
+if brightdata_gateway:
+    # BrightData uses single gateway, no proxy list needed
+    total_proxies = [brightdata_gateway]
+    print(f'using BrightData gateway: {brightdata_gateway} (auto-rotate IP per request)')
+else:
+    total_proxies = get_total_proxies()
 
 # 2.filter proxies by multi-threading (skip for proxy_pool/brightdata, already vetted)
 if len(total_proxies) > 10000:
@@ -281,11 +286,7 @@ if proxypool_url:
     # proxy_pool proxies are already vetted HTTPS
     active_proxies = total_proxies
     print(f'using {len(active_proxies)} proxy_pool proxies (skipping filter step)')
-elif brightdata_gateway:
-    # BrightData uses a single gateway, each request gets a new residential IP
-    active_proxies = [brightdata_gateway]
-    print(f'using BrightData gateway: {brightdata_gateway} (auto-rotate IP per request)')
-else:
+elif not brightdata_gateway:
     active_proxies = []
     count = 0
     def filter_proxys(proxies: 'list[str]') -> None:
@@ -351,34 +352,18 @@ total_successful_hits = 0
 total_attempted = 0
 failure_counter = Counter()
 
-while True:
-    reach_target = False
-    start_time = datetime.now()
-    round_hits = 0
-
-    # send POST click request for each proxy
-    for i, proxy in enumerate(active_proxies):
+if brightdata_gateway:
+    # BrightData: continuous requests, each one gets a new IP, no waiting
+    while True:
+        info = fetch_video_info(bv)
+        current = info['stat']['view']
+        if current >= target:
+            print(f'{pbar(target, target, total_successful_hits, current - initial_view_count)} done                 ', end='')
+            break
+        print(f'{pbar(current, target, total_successful_hits, current - initial_view_count)} request #{total_attempted + 1} (IP auto-rotated)   ', end='')
         try:
-            if i % update_pbar_count == 0:  # update progress bar
-                info = fetch_video_info(bv)
-                current = info['stat']['view']
-                if current >= target:
-                    reach_target = True
-                    print(f'{pbar(target, target, total_successful_hits, current - initial_view_count)} done                 ', end='')
-                    break
-
-            # BrightData: each request through the gateway gets a new residential IP
-            if brightdata_gateway:
-                proxy_conf = {
-                    'https': f'https://{brightdata_auth}@{brightdata_gateway}',
-                }
-            else:
-                proxy_conf = {
-                    'https': f'https://{proxy}',
-                }
-
             resp = requests.post('https://api.bilibili.com/x/click-interface/click/web/h5',
-                          proxies=proxy_conf,
+                          proxies={'https': f'https://{brightdata_auth}@{brightdata_gateway}'},
                           headers={'User-Agent': UserAgent().random},
                           timeout=timeout,
                           verify=False,
@@ -395,7 +380,6 @@ while True:
             if resp.status_code >= 400:
                 failure_counter[f'HTTP {resp.status_code}'] += 1
             else:
-                round_hits += 1
                 total_successful_hits += 1
         except requests.exceptions.Timeout:
             failure_counter['Connection timeout'] += 1
@@ -407,25 +391,76 @@ while True:
                 failure_counter['Connection timed out'] += 1
             else:
                 failure_counter['Connection error'] += 1
-        except Exception as e:
+        except Exception:
             failure_counter['Other error'] += 1
         total_attempted += 1
+else:
+    while True:
+        reach_target = False
+        start_time = datetime.now()
+        round_hits = 0
 
-        # update progress bar every update_pbar_count proxies
-        if (i + 1) % update_pbar_count == 0:
-            proxy_label = f'proxy({i+1}/{len(active_proxies)}) round {round_num+1}'
-            if brightdata_gateway:
-                proxy_label = f'request #{total_attempted} (IP auto-rotated) round {round_num+1}'
-            print(f'{pbar(current, target, total_successful_hits, current - initial_view_count)} {proxy_label}   ', end='')
+        # send POST click request for each proxy
+        for i, proxy in enumerate(active_proxies):
+            try:
+                if i % update_pbar_count == 0:  # update progress bar
+                    info = fetch_video_info(bv)
+                    current = info['stat']['view']
+                    if current >= target:
+                        reach_target = True
+                        print(f'{pbar(target, target, total_successful_hits, current - initial_view_count)} done                 ', end='')
+                        break
 
-    if reach_target:  # reach target view count
-        break
-    round_num += 1
-    remain_seconds = int(round_time-(datetime.now()-start_time).total_seconds())
-    if remain_seconds > 0:
-        for second in reversed(range(remain_seconds)):
-            print(f'{pbar(current, target, total_successful_hits, current - initial_view_count)} next round: {time(second)}          ', end='')
-            sleep(1)
+                proxy_conf = {
+                    'https': f'https://{proxy}',
+                }
+
+                resp = requests.post('https://api.bilibili.com/x/click-interface/click/web/h5',
+                              proxies=proxy_conf,
+                              headers={'User-Agent': UserAgent().random},
+                              timeout=timeout,
+                              verify=False,
+                              data={
+                                  'aid': info['aid'],
+                                  'cid': info['cid'],
+                                  'bvid': bv,
+                                  'part': '1',
+                                  'mid': info['owner']['mid'],
+                                  'jsonp': 'jsonp',
+                                  'type': info['desc_v2'][0]['type'] if info['desc_v2'] else '1',
+                                  'sub_type': '0'
+                              })
+                if resp.status_code >= 400:
+                    failure_counter[f'HTTP {resp.status_code}'] += 1
+                else:
+                    round_hits += 1
+                    total_successful_hits += 1
+            except requests.exceptions.Timeout:
+                failure_counter['Connection timeout'] += 1
+            except requests.exceptions.ConnectionError as e:
+                reason = str(e).lower()
+                if 'refused' in reason:
+                    failure_counter['Connection refused'] += 1
+                elif 'timed out' in reason:
+                    failure_counter['Connection timed out'] += 1
+                else:
+                    failure_counter['Connection error'] += 1
+            except Exception as e:
+                failure_counter['Other error'] += 1
+            total_attempted += 1
+
+            # update progress bar every update_pbar_count proxies
+            if (i + 1) % update_pbar_count == 0:
+                print(f'{pbar(current, target, total_successful_hits, current - initial_view_count)} proxy({i+1}/{len(active_proxies)}) round {round_num+1}   ', end='')
+
+        if reach_target:  # reach target view count
+            break
+        round_num += 1
+        remain_seconds = int(round_time-(datetime.now()-start_time).total_seconds())
+        if remain_seconds > 0:
+            for second in reversed(range(remain_seconds)):
+                print(f'{pbar(current, target, total_successful_hits, current - initial_view_count)} next round: {time(second)}          ', end='')
+                sleep(1)
 
 success_rate = (total_successful_hits / total_attempted) * 100 if total_attempted else 0
 failed_total = total_attempted - total_successful_hits
