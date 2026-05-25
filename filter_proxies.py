@@ -18,6 +18,9 @@ active_lock = threading.Lock()
 count = 0
 count_lock = threading.Lock()
 total_proxies = 0
+success_count = 0
+fail_count = 0
+stats_lock = threading.Lock()
 
 
 def load_proxies(source: str) -> list[str]:
@@ -38,7 +41,9 @@ def time_fmt(seconds: int) -> str:
 def pbar(n: int, total: int) -> str:
     ratio = min(n / total, 1.0)
     filled = int(ratio * 30)
-    return f'\r{n}/{total} [{"━" * filled}{" " * (30 - filled)}]'
+    with stats_lock:
+        s, f = success_count, fail_count
+    return f'\r{n}/{total} [{"━" * filled}{" " * (30 - filled)}] OK: {s} | Fail: {f}'
 
 
 def test_proxies(proxies: list[str], test_url: str, scheme: str) -> None:
@@ -46,6 +51,7 @@ def test_proxies(proxies: list[str], test_url: str, scheme: str) -> None:
     session = requests.Session()
     try:
         for proxy in proxies:
+            ok = False
             try:
                 resp = session.get(test_url,
                                    proxies={scheme: f'{scheme}://{proxy}'},
@@ -54,11 +60,16 @@ def test_proxies(proxies: list[str], test_url: str, scheme: str) -> None:
                 if resp.status_code == 200:
                     with active_lock:
                         active_proxies.append(proxy)
+                    ok = True
             except:
                 pass
-            with count_lock:
+            with stats_lock:
                 count += 1
                 c = count
+                if ok:
+                    success_count += 1
+                else:
+                    fail_count += 1
             if c % 100 == 0 or c == total_proxies:
                 print(f'{pbar(c, total_proxies)} {100*c/total_proxies:.1f}%   ', end='')
     finally:
