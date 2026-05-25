@@ -4,8 +4,6 @@ services:
     command: redis-server --requirepass redis123
     volumes:
       - redis_data:/data
-    ports:
-      - "6379:6379"
     healthcheck:
       test: redis-cli -a redis123 ping
       interval: 5s
