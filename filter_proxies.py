@@ -47,7 +47,7 @@ def pbar(n: int, total: int) -> str:
 
 
 def test_proxies(proxies: list[str], test_url: str, scheme: str) -> None:
-    global count
+    global count, success_count, fail_count
     session = requests.Session()
     try:
         for proxy in proxies:
