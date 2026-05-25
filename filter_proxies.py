@@ -16,7 +16,6 @@ TEST_URL = 'https://1.1.1.1/'
 active_proxies = []
 active_lock = threading.Lock()
 count = 0
-count_lock = threading.Lock()
 total_proxies = 0
 success_count = 0
 fail_count = 0
