@@ -473,16 +473,26 @@ stats_lock = threading.Lock()
 
 if residential_gateway:
     scheme = 'socks5' if proxy_type == 'socks5' else 'https'
-    bd_proxy = {scheme: f'{scheme}://{residential_auth}@{residential_gateway}'}
     boost_round = 0
 
+    def get_residential_proxy_for_round() -> dict:
+        """Generate a unique session ID for this round to get a fresh IP."""
+        session_id = uuid.uuid4().hex[:8]
+        # IPRoyal format: username-session-ID-lifetime-5min
+        if 'iproyal' in residential_gateway.lower():
+            user, passwd = residential_auth.split(':', 1)
+            sticky_user = f'{user}-session-{session_id}-lifetime-5'
+            return {scheme: f'{scheme}://{sticky_user}:{passwd}@{residential_gateway}'}
+        else:
+            return {scheme: f'{scheme}://{residential_auth}@{residential_gateway}'}
+
     def do_boost_residential() -> bool:
-        """One boosting attempt for residential proxy."""
+        """One boosting attempt for residential proxy with unique IP."""
         global total_successful_hits, total_attempted
         watch_time = random.randint(watch_time_min, watch_time_max)
         try:
             session = make_browser_session()
-            session.proxies.update(bd_proxy)
+            session.proxies.update(get_residential_proxy_for_round())
             make_session(session, bv)
             session.get(f'https://www.bilibili.com/video/{bv}/', timeout=watch_time + 5)
             sleep(watch_time)
