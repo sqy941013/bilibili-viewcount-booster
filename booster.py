@@ -24,7 +24,7 @@ if len(sys.argv) < 3:
     print(f'Usage: python {sys.argv[0]} <BV/AV_ID> <target_views> [proxy_list_url]')
     print(f'       python {sys.argv[0]} <BV/AV_ID> <target_views> --proxypool [url]')
     print(f'       python {sys.argv[0]} <BV/AV_ID> <target_views> --residential <gateway:port> <user:pass>')
-    print(f'       python {sys.argv[0]} <BV/AV_ID> <target_views> --brightdata <gateway:port> <user:pass>  (alias for --residential)')
+    print(f'       python {sys.argv[0]} <BV/AV_ID> <target_views> --proxytype http|socks5  (default: http)')
     sys.exit(1)
 
 bv = sys.argv[1]  # video BV/AV id (raw input)
@@ -35,6 +35,7 @@ proxy_list_url = None
 proxypool_url = None
 residential_gateway = None  # e.g. gate.smartproxy.io:7000
 residential_auth = None     # e.g. username:password
+proxy_type = 'http'         # http or socks5
 
 i = 3
 while i < len(sys.argv):
@@ -45,6 +46,9 @@ while i < len(sys.argv):
         residential_gateway = sys.argv[i + 1]
         residential_auth = sys.argv[i + 2]
         i += 3
+    elif sys.argv[i] == '--proxytype':
+        proxy_type = sys.argv[i + 1].lower()
+        i += 2
     else:
         proxy_list_url = sys.argv[i]
         i += 1
@@ -295,8 +299,9 @@ elif not residential_gateway:
         for proxy in proxies:
             count = count + 1
             try:
+                scheme = 'socks5' if proxy_type == 'socks5' else 'http'
                 requests.post('http://httpbin.org/post',
-                              proxies={'http': 'http://'+proxy},
+                              proxies={scheme: f'{scheme}://'+proxy},
                               timeout=timeout)
                 active_proxies.append(proxy)
             except:  # proxy connect timeout
@@ -355,7 +360,8 @@ failure_counter = Counter()
 
 if residential_gateway:
     watch_time = 10  # seconds to "watch" before view counts
-    bd_proxy = {'https': f'https://{residential_auth}@{residential_gateway}'}
+    scheme = 'socks5' if proxy_type == 'socks5' else 'https'
+    bd_proxy = {scheme: f'{scheme}://{residential_auth}@{residential_gateway}'}
 
     while True:
         info = fetch_video_info(bv)
@@ -425,8 +431,9 @@ else:
                         print(f'{pbar(target, target, total_successful_hits, current - initial_view_count)} done                 ', end='')
                         break
 
+                proxy_scheme = 'socks5' if proxy_type == 'socks5' else 'https'
                 proxy_conf = {
-                    'https': f'https://{proxy}',
+                    proxy_scheme: f'{proxy_scheme}://{proxy}',
                 }
 
                 resp = requests.post('https://api.bilibili.com/x/click-interface/click/web/h5',
