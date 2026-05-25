@@ -47,8 +47,9 @@ python booster.py BV1ZxGj6kEVh 100 proxies.txt
 python booster.py BV1ZxGj6kEVh 100 --proxypool
 python booster.py BV1ZxGj6kEVh 100 --proxypool http://10.0.0.1:5010
 
-# 使用 BrightData 住宅代理（每次请求自动换 IP）
-python booster.py BV1ZxGj6kEVh 100 --brightdata brd.superproxy.io:33335 brd-customer-xxx-zone-residential_country-cn:password
+# 使用住宅代理（Smartproxy、BrightData 等，每次请求自动换 IP）
+python booster.py BV1ZxGj6kEVh 100 --residential gate.smartproxy.io:7000 username:password
+python booster.py BV1ZxGj6kEVh 100 --brightdata brd.superproxy.io:33335 brd-customer-xxx-zone-residential:password
 ```
 
 ## 部署 proxy_pool（可选）
