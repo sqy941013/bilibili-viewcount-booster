@@ -23,6 +23,7 @@ update_pbar_count = 10  # update view count progress bar for every xx proxies
 if len(sys.argv) < 3:
     print(f'Usage: python {sys.argv[0]} <BV/AV_ID> <target_views> [proxy_list_url]')
     print(f'       python {sys.argv[0]} <BV/AV_ID> <target_views> --proxypool [url]')
+    print(f'       python {sys.argv[0]} <BV/AV_ID> <target_views> --brightdata <gateway> <auth>')
     sys.exit(1)
 
 bv = sys.argv[1]  # video BV/AV id (raw input)
@@ -31,15 +32,24 @@ target = int(sys.argv[2])  # target view count
 # Determine proxy source mode
 proxy_list_url = None
 proxypool_url = None
+brightdata_gateway = None  # e.g. brd.superproxy.io:33335
+brightdata_auth = None     # e.g. brd-customer-xxx-zone-residential:password
 
-if len(sys.argv) >= 4:
-    if sys.argv[3] == '--proxypool':
-        proxypool_url = sys.argv[4] if len(sys.argv) > 4 else 'http://127.0.0.1:5010'
+i = 3
+while i < len(sys.argv):
+    if sys.argv[i] == '--proxypool':
+        proxypool_url = sys.argv[i + 1] if i + 1 < len(sys.argv) else 'http://127.0.0.1:5010'
+        i += 2
+    elif sys.argv[i] == '--brightdata':
+        brightdata_gateway = sys.argv[i + 1]
+        brightdata_auth = sys.argv[i + 2]
+        i += 3
     else:
-        proxy_list_url = sys.argv[3]
-elif '--proxypool' in sys.argv:
-    idx = sys.argv.index('--proxypool')
-    proxypool_url = sys.argv[idx + 1] if idx + 1 < len(sys.argv) else 'http://127.0.0.1:5010'
+        proxy_list_url = sys.argv[i]
+        i += 1
+
+if brightdata_gateway and ':' not in brightdata_gateway:
+    brightdata_gateway += ':33335'
 
 
 def fetch_from_checkerproxy(min_count: int = 100, max_lookback_days: int = 7) -> list[str]:
@@ -261,7 +271,7 @@ def pbar(n: int, total: int, hits: Optional[int], view_increase: Optional[int]) 
 print()
 total_proxies = get_total_proxies()
 
-# 2.filter proxies by multi-threading (skip for proxy_pool, already vetted)
+# 2.filter proxies by multi-threading (skip for proxy_pool/brightdata, already vetted)
 if len(total_proxies) > 10000:
     print('more than 10000 proxies, randomly pick 10000 proxies')
     random.shuffle(total_proxies)
@@ -271,6 +281,10 @@ if proxypool_url:
     # proxy_pool proxies are already vetted HTTPS
     active_proxies = total_proxies
     print(f'using {len(active_proxies)} proxy_pool proxies (skipping filter step)')
+elif brightdata_gateway:
+    # BrightData uses a single gateway, each request gets a new residential IP
+    active_proxies = [brightdata_gateway]
+    print(f'using BrightData gateway: {brightdata_gateway} (auto-rotate IP per request)')
 else:
     active_proxies = []
     count = 0
@@ -353,8 +367,18 @@ while True:
                     print(f'{pbar(target, target, total_successful_hits, current - initial_view_count)} done                 ', end='')
                     break
 
+            # BrightData: each request through the gateway gets a new residential IP
+            if brightdata_gateway:
+                proxy_conf = {
+                    'https': f'https://{brightdata_auth}@{brightdata_gateway}',
+                }
+            else:
+                proxy_conf = {
+                    'https': f'https://{proxy}',
+                }
+
             resp = requests.post('https://api.bilibili.com/x/click-interface/click/web/h5',
-                          proxies={'https': 'https://'+proxy},
+                          proxies=proxy_conf,
                           headers={'User-Agent': UserAgent().random},
                           timeout=timeout,
                           verify=False,
@@ -389,7 +413,10 @@ while True:
 
         # update progress bar every update_pbar_count proxies
         if (i + 1) % update_pbar_count == 0:
-            print(f'{pbar(current, target, total_successful_hits, current - initial_view_count)} proxy({i+1}/{len(active_proxies)}) round {round_num+1}   ', end='')
+            proxy_label = f'proxy({i+1}/{len(active_proxies)}) round {round_num+1}'
+            if brightdata_gateway:
+                proxy_label = f'request #{total_attempted} (IP auto-rotated) round {round_num+1}'
+            print(f'{pbar(current, target, total_successful_hits, current - initial_view_count)} {proxy_label}   ', end='')
 
     if reach_target:  # reach target view count
         break

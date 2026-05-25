@@ -46,6 +46,9 @@ python booster.py BV1ZxGj6kEVh 100 proxies.txt
 # 使用 proxy_pool（本地部署，自动获取 HTTPS 代理）
 python booster.py BV1ZxGj6kEVh 100 --proxypool
 python booster.py BV1ZxGj6kEVh 100 --proxypool http://10.0.0.1:5010
+
+# 使用 BrightData 住宅代理（每次请求自动换 IP）
+python booster.py BV1ZxGj6kEVh 100 --brightdata brd.superproxy.io:33335 brd-customer-xxx-zone-residential_country-cn:password
 ```
 
 ## 部署 proxy_pool（可选）
@@ -64,7 +67,7 @@ docker compose logs -f proxy_pool
 curl http://127.0.0.1:5010/get/
 ```
 
-proxy_pool 会持续从内置采集器拉取代理，`booster.py` 通过 `--proxypool` 直接调用 `/get_all/` 获取所有已验证的 HTTPS 代理，跳过本地过滤步骤。
+proxy_pool 会持续从内置采集器拉取代理，`booster.py` 通过 `--proxypool` 直接调用 `/all/?type=https` 获取所有已验证的 HTTPS 代理，跳过本地过滤步骤。
 
 ### filter_proxies.py
 
