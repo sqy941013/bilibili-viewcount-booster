@@ -42,14 +42,14 @@ configs = [
 ATTEMPTS_PER_CONFIG = 20
 WATCH_TIME = 8
 
-def get_views():
+def get_views(proxy=None):
     r = requests.get('https://api.bilibili.com/x/web-interface/view',
-                     params={'bvid': BV}, timeout=15)
+                     params={'bvid': BV}, timeout=15, proxies=proxy)
     return r.json()['data']['stat']['view']
 
-def get_video_info():
+def get_video_info(proxy=None):
     r = requests.get('https://api.bilibili.com/x/web-interface/view',
-                     params={'bvid': BV}, timeout=15)
+                     params={'bvid': BV}, timeout=15, proxies=proxy)
     return r.json()['data']
 
 def make_request(auth, country, attempt_num):
@@ -112,15 +112,18 @@ def make_request(auth, country, attempt_num):
     except Exception as e:
         return (False, str(e)[:100])
 
+# Use first country's proxy for baseline API calls
+baseline_proxy = {'socks5': f'socks5://{AUTH_BASE}_country-{configs[0]["country"]}@{GATEWAY}'}
+
 # Get video info once
 print('Fetching video info...')
-info = get_video_info()
+info = get_video_info(proxy=baseline_proxy)
 print(f'Video: {info["title"]}')
 print(f'AID: {info["aid"]}, CID: {info["cid"]}')
 print()
 
 # Baseline view count
-views_before_all = get_views()
+views_before_all = get_views(proxy=baseline_proxy)
 print(f'Baseline views: {views_before_all}')
 print(f'Testing {len(configs)} countries x {ATTEMPTS_PER_CONFIG} attempts each')
 print(f'Watch time: {WATCH_TIME}s per attempt')
@@ -130,9 +133,10 @@ results = []
 
 for cfg in configs:
     auth = f'{AUTH_BASE}_country-{cfg["country"]}'
+    check_proxy = {'socks5': f'socks5://{auth}@{GATEWAY}'}
     print(f'\n--- {cfg["name"]} ({cfg["country"]}) ---')
 
-    views_before = get_views()
+    views_before = get_views(proxy=check_proxy)
     print(f'  Views before: {views_before}')
 
     success = 0
@@ -144,10 +148,10 @@ for cfg in configs:
         else:
             errors.append(detail)
         if (i + 1) % 5 == 0:
-            views_now = get_views()
+            views_now = get_views(proxy=check_proxy)
             print(f'  [{i+1}/{ATTEMPTS_PER_CONFIG}] success={success} views_now={views_now}')
 
-    views_after = get_views()
+    views_after = get_views(proxy=check_proxy)
     increase = views_after - views_before
     conversion = increase / ATTEMPTS_PER_CONFIG * 100
 
