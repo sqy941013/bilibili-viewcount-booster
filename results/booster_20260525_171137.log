@@ -1,0 +1,406 @@
+2026-05-25 17:11:38,237 | Round 1: current_views=46570 target=100000 increase=0 hits=0 attempts=0 rate=0.0%
+2026-05-25 17:11:45,778 | [attempt #1] session=9b14fa75 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:11:48,119 | [attempt #1] session=c6f3eb35 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:11:48,328 | [attempt #1] session=6358347e watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:11:48,453 | [attempt #1] session=d287ca34 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:11:48,926 | [attempt #1] session=c99ddfda watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:11:49,117 | Round 2: current_views=46571 target=100000 increase=1 hits=5 attempts=5 rate=100.0%
+2026-05-25 17:11:56,824 | [attempt #6] session=b6c679ad watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:11:56,885 | [attempt #6] session=97547e00 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:11:57,904 | [attempt #6] session=6b5c6893 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:11:57,934 | [attempt #6] session=6ddcd965 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:12:00,016 | [attempt #6] session=faeaa091 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:12:00,534 | Round 3: current_views=46571 target=100000 increase=1 hits=10 attempts=10 rate=100.0%
+2026-05-25 17:12:07,618 | [attempt #11] session=7c436f43 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:12:08,546 | [attempt #11] session=4a676938 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:12:10,098 | [attempt #11] session=64f8ff44 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:12:10,294 | [attempt #11] session=97e814f3 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:12:11,683 | [attempt #11] session=0d1783ab watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:12:12,062 | Round 4: current_views=46571 target=100000 increase=1 hits=15 attempts=15 rate=100.0%
+2026-05-25 17:12:20,756 | [attempt #16] session=090b60f4 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:12:20,859 | [attempt #16] session=b24106ed watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:12:21,129 | [attempt #16] session=2cd118b5 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:12:21,887 | [attempt #16] session=5bef0389 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:12:21,930 | [attempt #16] session=42cb17cc watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:12:22,109 | Round 5: current_views=46571 target=100000 increase=1 hits=20 attempts=20 rate=100.0%
+2026-05-25 17:12:28,898 | [attempt #21] session=ba05b688 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:12:28,968 | [attempt #21] session=a42bbd7d watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:12:29,840 | [attempt #21] session=09792e5d watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:12:30,867 | [attempt #21] session=d82f88fe watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:12:31,137 | [attempt #21] session=00b1303d watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:12:31,328 | Round 6: current_views=46571 target=100000 increase=1 hits=25 attempts=25 rate=100.0%
+2026-05-25 17:12:39,008 | [attempt #26] session=f5165c47 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:12:39,065 | [attempt #26] session=8704a3f5 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:12:40,109 | [attempt #26] session=81d36559 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:12:40,121 | [attempt #26] session=081bdc99 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:12:41,086 | [attempt #26] session=7101eb22 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:12:41,317 | Round 7: current_views=46571 target=100000 increase=1 hits=30 attempts=30 rate=100.0%
+2026-05-25 17:12:48,095 | [attempt #31] session=5bd44bb6 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:12:48,159 | [attempt #31] session=3f33873a watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:12:51,028 | [attempt #31] session=d9070468 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:12:51,136 | [attempt #31] session=56e80c96 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:12:51,138 | [attempt #31] session=9c480664 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:12:51,303 | Round 8: current_views=46571 target=100000 increase=1 hits=35 attempts=35 rate=100.0%
+2026-05-25 17:13:00,459 | [attempt #36] session=dbe7c7b7 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:13:01,401 | [attempt #36] session=e2ad5c61 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:13:01,417 | [attempt #36] session=ac34acf7 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:13:02,077 | [attempt #36] session=c6ad8fc0 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:13:02,496 | [attempt #36] session=b0557dd1 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:13:02,708 | Round 9: current_views=46571 target=100000 increase=1 hits=40 attempts=40 rate=100.0%
+2026-05-25 17:13:09,422 | [attempt #41] session=6e3a947e watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:13:10,373 | [attempt #41] session=54292ffe watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:13:11,226 | [attempt #41] session=be563cb3 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:13:11,429 | [attempt #41] session=570108eb watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:13:12,312 | [attempt #41] session=4bdb74b7 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:13:12,539 | Round 10: current_views=46571 target=100000 increase=1 hits=45 attempts=45 rate=100.0%
+2026-05-25 17:13:19,191 | [attempt #46] session=25dfa85c watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:13:20,212 | [attempt #46] session=eec73c51 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:13:20,231 | [attempt #46] session=527d5188 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:13:21,120 | [attempt #46] session=e605c6e9 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:13:23,318 | [attempt #46] session=e5af5f46 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:13:23,504 | Round 11: current_views=46571 target=100000 increase=1 hits=50 attempts=50 rate=100.0%
+2026-05-25 17:13:32,174 | [attempt #51] session=ca5979fa watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:13:32,200 | [attempt #51] session=aca3f384 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:13:33,158 | [attempt #51] session=4181289a watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:13:33,235 | [attempt #51] session=5586947a watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:13:34,145 | [attempt #51] session=dcc500d5 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:13:34,308 | Round 12: current_views=46571 target=100000 increase=1 hits=55 attempts=55 rate=100.0%
+2026-05-25 17:13:42,067 | [attempt #56] session=acf491da watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:13:42,935 | [attempt #56] session=ad9b96e7 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:13:43,021 | [attempt #56] session=860610c4 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:13:44,096 | [attempt #56] session=9afefdb7 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:13:45,128 | [attempt #56] session=a5257e91 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:13:45,271 | Round 13: current_views=46571 target=100000 increase=1 hits=60 attempts=60 rate=100.0%
+2026-05-25 17:13:51,872 | [attempt #61] session=7fb6d859 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:13:51,914 | [attempt #61] session=ba6f3d25 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:13:53,840 | [attempt #61] session=8a40427c watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:13:54,064 | [attempt #61] session=47d26715 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:13:55,924 | [attempt #61] session=b39c1f43 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:13:56,103 | Round 14: current_views=46573 target=100000 increase=3 hits=65 attempts=65 rate=100.0%
+2026-05-25 17:14:02,807 | [attempt #66] session=7c7573d4 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:14:04,769 | [attempt #66] session=cb659f68 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:14:04,841 | [attempt #66] session=e3ce591c watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:14:06,788 | [attempt #66] session=fa656860 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:14:06,808 | [attempt #66] session=449fa36d watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:14:06,965 | Round 15: current_views=46573 target=100000 increase=3 hits=70 attempts=70 rate=100.0%
+2026-05-25 17:14:13,646 | [attempt #71] session=5f1c1d8e watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:14:14,579 | [attempt #71] session=1c7432b7 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:14:14,608 | [attempt #71] session=7cc919a2 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:14:17,572 | [attempt #71] session=7bfbcef1 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:14:17,590 | [attempt #71] session=3334b2c9 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:14:17,785 | Round 16: current_views=46573 target=100000 increase=3 hits=75 attempts=75 rate=100.0%
+2026-05-25 17:14:24,403 | [attempt #76] session=450d5649 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:14:26,315 | [attempt #76] session=9f1c8cdc watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:14:26,417 | [attempt #76] session=1d4e7400 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:14:27,386 | [attempt #76] session=62400d44 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:14:27,444 | [attempt #76] session=d3540cb6 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:14:27,601 | Round 17: current_views=46573 target=100000 increase=3 hits=80 attempts=80 rate=100.0%
+2026-05-25 17:14:34,276 | [attempt #81] session=fbb82647 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:14:35,153 | [attempt #81] session=43d7ba15 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:14:35,241 | [attempt #81] session=2bf36de0 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:14:37,228 | [attempt #81] session=5cb37b72 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:14:38,229 | [attempt #81] session=775b824f watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:14:38,368 | Round 18: current_views=46573 target=100000 increase=3 hits=85 attempts=85 rate=100.0%
+2026-05-25 17:14:45,000 | [attempt #86] session=e61fdc89 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:14:46,006 | [attempt #86] session=8785a99b watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:14:46,008 | [attempt #86] session=8274456e watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:14:46,997 | [attempt #86] session=fe997fbc watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:14:48,927 | [attempt #86] session=80871293 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:14:49,077 | Round 19: current_views=46573 target=100000 increase=3 hits=90 attempts=90 rate=100.0%
+2026-05-25 17:14:55,702 | [attempt #91] session=60c03935 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:14:57,609 | [attempt #91] session=6d295371 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:14:57,611 | [attempt #91] session=03c026f8 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:14:57,657 | [attempt #91] session=c70dbb32 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:14:57,775 | [attempt #91] session=a5ac6577 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:14:57,918 | Round 20: current_views=46573 target=100000 increase=3 hits=95 attempts=95 rate=100.0%
+2026-05-25 17:15:05,515 | [attempt #96] session=48e88340 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:15:05,588 | [attempt #96] session=d88f2a23 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:15:06,535 | [attempt #96] session=d93c30d7 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:15:08,510 | [attempt #96] session=e9ee6cae watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:15:08,564 | [attempt #96] session=52598faa watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:15:08,744 | Round 21: current_views=46573 target=100000 increase=3 hits=100 attempts=100 rate=100.0%
+2026-05-25 17:15:17,358 | [attempt #101] session=9d41b1fd watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:15:18,347 | [attempt #101] session=ef882525 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:15:18,402 | [attempt #101] session=24f63bb7 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:15:19,367 | [attempt #101] session=5b780b90 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:15:19,373 | [attempt #101] session=f2be5e6a watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:15:19,525 | Round 22: current_views=46573 target=100000 increase=3 hits=105 attempts=105 rate=100.0%
+2026-05-25 17:15:26,119 | [attempt #106] session=e3eda456 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:15:27,154 | [attempt #106] session=2be69f91 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:15:28,123 | [attempt #106] session=9e7e6dee watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:15:29,167 | [attempt #106] session=460a4608 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:15:30,061 | [attempt #106] session=33b124fb watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:15:30,216 | Round 23: current_views=46573 target=100000 increase=3 hits=110 attempts=110 rate=100.0%
+2026-05-25 17:15:38,049 | [attempt #111] session=bc561df8 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:15:38,860 | [attempt #111] session=cbbd7475 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:15:38,869 | [attempt #111] session=101ed5c8 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:15:38,878 | [attempt #111] session=9a02050c watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:15:40,933 | [attempt #111] session=f9f7a268 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:15:41,078 | Round 24: current_views=46573 target=100000 increase=3 hits=115 attempts=115 rate=100.0%
+2026-05-25 17:15:49,730 | [attempt #116] session=be100b67 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:15:49,753 | [attempt #116] session=da14fa64 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:15:50,701 | [attempt #116] session=9412d056 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:15:50,717 | [attempt #116] session=a9817687 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:15:51,646 | [attempt #116] session=18d615dc watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:15:51,849 | Round 25: current_views=46573 target=100000 increase=3 hits=120 attempts=120 rate=100.0%
+2026-05-25 17:15:59,443 | [attempt #121] session=4765f905 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:15:59,568 | [attempt #121] session=ac7858ae watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:15:59,640 | [attempt #121] session=aa6f8e06 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:16:00,373 | [attempt #121] session=2ffb0629 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:16:02,453 | [attempt #121] session=f11c1fac watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:16:02,670 | Round 26: current_views=46575 target=100000 increase=5 hits=125 attempts=125 rate=100.0%
+2026-05-25 17:16:09,360 | [attempt #126] session=28c3ad02 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:16:10,300 | [attempt #126] session=e0892a62 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:16:12,294 | [attempt #126] session=a79eff44 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:16:12,334 | [attempt #126] session=8bb6e7ba watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:16:13,353 | [attempt #126] session=11ea735d watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:16:13,529 | Round 27: current_views=46575 target=100000 increase=5 hits=130 attempts=130 rate=100.0%
+2026-05-25 17:16:20,199 | [attempt #131] session=9961fec2 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:16:20,265 | [attempt #131] session=02511234 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:16:20,303 | [attempt #131] session=c9816f97 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:16:24,211 | [attempt #131] session=bd78e74f watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:16:24,323 | [attempt #131] session=b39ba15b watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:16:24,467 | Round 28: current_views=46575 target=100000 increase=5 hits=135 attempts=135 rate=100.0%
+2026-05-25 17:16:31,341 | [attempt #136] session=ec39bb89 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:16:32,204 | [attempt #136] session=056fb88b watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:16:33,274 | [attempt #136] session=09b577b2 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:16:34,172 | [attempt #136] session=8dc8c37e watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:16:34,232 | [attempt #136] session=92c65ef7 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:16:34,377 | Round 29: current_views=46575 target=100000 increase=5 hits=140 attempts=140 rate=100.0%
+2026-05-25 17:16:41,158 | [attempt #141] session=25fdf0f3 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:16:44,054 | [attempt #141] session=be944b79 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:16:44,082 | [attempt #141] session=84b6bc41 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:16:44,102 | [attempt #141] session=8986ed0b watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:16:45,120 | [attempt #141] session=76cfe32b watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:16:45,303 | Round 30: current_views=46575 target=100000 increase=5 hits=145 attempts=145 rate=100.0%
+2026-05-25 17:16:51,978 | [attempt #146] session=5fc61d81 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:16:51,979 | [attempt #146] session=fc9790bf watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:16:52,008 | [attempt #146] session=166eb1a7 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:16:52,039 | [attempt #146] session=9d7d1c44 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:16:55,158 | [attempt #146] session=576ee2b2 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:16:55,317 | Round 31: current_views=46575 target=100000 increase=5 hits=150 attempts=150 rate=100.0%
+2026-05-25 17:17:02,125 | [attempt #151] session=50ae1f28 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:17:02,906 | [attempt #151] session=b3aeadb6 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:17:03,015 | [attempt #151] session=4b7f003a watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:17:04,085 | [attempt #151] session=816c3e2a watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:17:05,090 | [attempt #151] session=ac2a89cf watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:17:05,265 | Round 32: current_views=46575 target=100000 increase=5 hits=155 attempts=155 rate=100.0%
+2026-05-25 17:17:11,866 | [attempt #156] session=331ca300 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:17:13,871 | [attempt #156] session=9e214f00 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:17:14,860 | [attempt #156] session=e27dafe1 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:17:15,094 | [attempt #156] session=6277b69f watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:17:15,105 | [attempt #156] session=e6c8a92d watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:17:15,322 | Round 33: current_views=46575 target=100000 increase=5 hits=160 attempts=160 rate=100.0%
+2026-05-25 17:17:22,138 | [attempt #161] session=3d0fe3c7 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:17:23,010 | [attempt #161] session=2ba932c2 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:17:23,033 | [attempt #161] session=937569ff watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:17:25,016 | [attempt #161] session=6748a967 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:17:25,068 | [attempt #161] session=63ffb650 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:17:25,211 | Round 34: current_views=46575 target=100000 increase=5 hits=165 attempts=165 rate=100.0%
+2026-05-25 17:17:32,848 | [attempt #166] session=10a4cc21 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:17:33,805 | [attempt #166] session=f4021ab6 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:17:33,928 | [attempt #166] session=f40ddcdc watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:17:34,996 | [attempt #166] session=9c86e34a watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:17:35,839 | [attempt #166] session=94a8d778 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:17:36,006 | Round 35: current_views=46575 target=100000 increase=5 hits=170 attempts=170 rate=100.0%
+2026-05-25 17:17:44,657 | [attempt #171] session=30ee2094 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:17:44,724 | [attempt #171] session=6248adbf watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:17:46,605 | [attempt #171] session=1240b6ae watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:17:46,637 | [attempt #171] session=7a0f6d72 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:17:46,702 | [attempt #171] session=423e6de6 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:17:46,902 | Round 36: current_views=46575 target=100000 increase=5 hits=175 attempts=175 rate=100.0%
+2026-05-25 17:17:53,529 | [attempt #176] session=434da1bd watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:17:55,541 | [attempt #176] session=f9494867 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:17:55,554 | [attempt #176] session=14f4813f watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:17:56,491 | [attempt #176] session=56992a28 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:17:57,670 | [attempt #176] session=f72fef29 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:17:57,881 | Round 37: current_views=46575 target=100000 increase=5 hits=180 attempts=180 rate=100.0%
+2026-05-25 17:18:04,701 | [attempt #181] session=bb18db52 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:18:06,674 | [attempt #181] session=70ccd40b watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:18:07,415 | [attempt #181] session=9a477ea6 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:18:08,530 | [attempt #181] session=c2b797a7 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:18:08,552 | [attempt #181] session=7400bf24 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:18:08,759 | Round 38: current_views=46577 target=100000 increase=7 hits=185 attempts=185 rate=100.0%
+2026-05-25 17:18:15,419 | [attempt #186] session=5bb0b803 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:18:17,379 | [attempt #186] session=051e618e watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:18:17,428 | [attempt #186] session=6a80d0b1 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:18:17,458 | [attempt #186] session=d4d483d7 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:18:18,397 | [attempt #186] session=054cbd3c watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:18:18,595 | Round 39: current_views=46577 target=100000 increase=7 hits=190 attempts=190 rate=100.0%
+2026-05-25 17:18:25,267 | [attempt #191] session=e5db3980 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:18:28,316 | [attempt #191] session=5fa133b5 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:18:28,371 | [attempt #191] session=5e892cf4 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:18:29,330 | [attempt #191] session=b52da336 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:18:29,369 | [attempt #191] session=f15a6570 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:18:29,523 | Round 40: current_views=46577 target=100000 increase=7 hits=195 attempts=195 rate=100.0%
+2026-05-25 17:18:38,222 | [attempt #196] session=3f3aa105 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:18:38,296 | [attempt #196] session=05d8bbe9 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:18:39,295 | [attempt #196] session=4f049768 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:18:40,208 | [attempt #196] session=f4d22b00 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:18:40,247 | [attempt #196] session=3907537f watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:18:40,469 | Round 41: current_views=46577 target=100000 increase=7 hits=200 attempts=200 rate=100.0%
+2026-05-25 17:18:49,184 | [attempt #201] session=13914ef9 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:18:49,210 | [attempt #201] session=c8eb50d4 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:18:51,267 | [attempt #201] session=f90d3b98 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:18:51,281 | [attempt #201] session=12313994 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:18:51,346 | [attempt #201] session=67df6955 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:18:51,585 | Round 42: current_views=46577 target=100000 increase=7 hits=205 attempts=205 rate=100.0%
+2026-05-25 17:18:58,275 | [attempt #206] session=65d8b498 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:18:58,336 | [attempt #206] session=8e6fd1d6 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:18:59,284 | [attempt #206] session=9d8e5e32 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:18:59,326 | [attempt #206] session=70d719fb watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:18:59,385 | [attempt #206] session=01920bdf watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:18:59,574 | Round 43: current_views=46577 target=100000 increase=7 hits=210 attempts=210 rate=100.0%
+2026-05-25 17:19:06,200 | [attempt #211] session=9f0627e6 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:19:07,659 | [attempt #211] session=9b9a3bbd watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:19:08,669 | [attempt #211] session=3bcfa9a0 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:19:09,553 | [attempt #211] session=acc12671 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:19:10,467 | [attempt #211] session=5cae152f watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:19:10,677 | Round 44: current_views=46577 target=100000 increase=7 hits=215 attempts=215 rate=100.0%
+2026-05-25 17:19:17,440 | [attempt #216] session=ecefdbbb watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:19:17,473 | [attempt #216] session=7b4aa9dc watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:19:17,616 | [attempt #216] session=8153c232 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:19:19,438 | [attempt #216] session=e4a9b96c watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:19:20,405 | [attempt #216] session=542b4c78 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:19:20,565 | Round 45: current_views=46577 target=100000 increase=7 hits=220 attempts=220 rate=100.0%
+2026-05-25 17:19:27,497 | [attempt #221] session=f38f5866 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:19:28,360 | [attempt #221] session=0ea6af52 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:19:29,195 | [attempt #221] session=70938cf6 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:19:31,207 | [attempt #221] session=f152b758 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:19:31,244 | [attempt #221] session=8dc7c6d9 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:19:31,465 | Round 46: current_views=46577 target=100000 increase=7 hits=225 attempts=225 rate=100.0%
+2026-05-25 17:19:38,164 | [attempt #226] session=bd988f4a watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:19:38,183 | [attempt #226] session=f2a7093d watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:19:39,087 | [attempt #226] session=96b4fb8a watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:19:40,107 | [attempt #226] session=aa4c9dcb watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:19:42,188 | [attempt #226] session=c5b67322 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:19:42,358 | Round 47: current_views=46577 target=100000 increase=7 hits=230 attempts=230 rate=100.0%
+2026-05-25 17:19:49,069 | [attempt #231] session=56927b7c watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:19:49,097 | [attempt #231] session=9f230ef4 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:19:50,124 | [attempt #231] session=b1d54800 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:19:51,121 | [attempt #231] session=aa36065a watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:19:53,157 | [attempt #231] session=43e44fa2 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:19:53,416 | Round 48: current_views=46577 target=100000 increase=7 hits=235 attempts=235 rate=100.0%
+2026-05-25 17:20:01,270 | [attempt #236] session=b6db03fd watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:20:02,242 | [attempt #236] session=b918a411 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:20:03,234 | [attempt #236] session=8081731e watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:20:04,114 | [attempt #236] session=4b308bb4 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:20:04,201 | [attempt #236] session=c1f12c45 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:20:04,431 | Round 49: current_views=46577 target=100000 increase=7 hits=240 attempts=240 rate=100.0%
+2026-05-25 17:20:11,174 | [attempt #241] session=25a770fa watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:20:12,161 | [attempt #241] session=9bc9775b watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:20:13,143 | [attempt #241] session=9cccbc8d watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:20:14,081 | [attempt #241] session=3487a68d watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:20:15,117 | [attempt #241] session=0093b62d watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:20:15,301 | Round 50: current_views=46579 target=100000 increase=9 hits=245 attempts=245 rate=100.0%
+2026-05-25 17:20:23,069 | [attempt #246] session=722489a0 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:20:23,981 | [attempt #246] session=c6103c4a watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:20:25,099 | [attempt #246] session=885de742 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:20:26,026 | [attempt #246] session=0cf8b46a watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:20:26,050 | [attempt #246] session=e46be8e6 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:20:26,264 | Round 51: current_views=46579 target=100000 increase=9 hits=250 attempts=250 rate=100.0%
+2026-05-25 17:20:32,917 | [attempt #251] session=ad58fb84 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:20:33,057 | [attempt #251] session=bb13f641 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:20:33,971 | [attempt #251] session=e02b07a5 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:20:35,028 | [attempt #251] session=a77e5472 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:20:35,888 | [attempt #251] session=fa622464 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:20:36,031 | Round 52: current_views=46579 target=100000 increase=9 hits=255 attempts=255 rate=100.0%
+2026-05-25 17:20:42,656 | [attempt #256] session=4bcc4565 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:20:45,608 | [attempt #256] session=7a09a500 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:20:45,668 | [attempt #256] session=5ff563e2 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:20:45,678 | [attempt #256] session=246b71da watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:20:45,753 | [attempt #256] session=669fac9f watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:20:45,909 | Round 53: current_views=46579 target=100000 increase=9 hits=260 attempts=260 rate=100.0%
+2026-05-25 17:20:52,536 | [attempt #261] session=c21a5be3 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:20:53,540 | [attempt #261] session=9bb5b295 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:20:55,447 | [attempt #261] session=467f5b13 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:20:55,541 | [attempt #261] session=a970a004 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:20:56,547 | [attempt #261] session=81191222 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:20:56,689 | Round 54: current_views=46579 target=100000 increase=9 hits=265 attempts=265 rate=100.0%
+2026-05-25 17:21:03,298 | [attempt #266] session=77aaefb1 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:21:03,396 | [attempt #266] session=28943bbe watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:21:05,530 | [attempt #266] session=29d1ec13 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:21:06,326 | [attempt #266] session=a567334a watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:21:06,386 | [attempt #266] session=44e16b8f watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:21:06,536 | Round 55: current_views=46579 target=100000 increase=9 hits=270 attempts=270 rate=100.0%
+2026-05-25 17:21:14,217 | [attempt #271] session=8b992498 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:21:15,361 | [attempt #271] session=8dd10fb7 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:21:16,241 | [attempt #271] session=531cb5ea watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:21:16,344 | [attempt #271] session=8dd69b8c watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:21:17,111 | [attempt #271] session=1d94824b watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:21:17,275 | Round 56: current_views=46579 target=100000 increase=9 hits=275 attempts=275 rate=100.0%
+2026-05-25 17:21:25,159 | [attempt #276] session=0ae14d7d watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:21:27,259 | [attempt #276] session=d52f6a5a watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:21:28,106 | [attempt #276] session=7f943615 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:21:28,871 | [attempt #276] session=50561b56 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:21:29,159 | [attempt #276] session=c2c903ca watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:21:29,327 | Round 57: current_views=46579 target=100000 increase=9 hits=280 attempts=280 rate=100.0%
+2026-05-25 17:21:35,947 | [attempt #281] session=766f439a watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:21:36,881 | [attempt #281] session=70bc8b97 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:21:37,874 | [attempt #281] session=7ebc226e watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:21:38,968 | [attempt #281] session=c359543e watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:21:38,975 | [attempt #281] session=dea60425 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:21:39,119 | Round 58: current_views=46579 target=100000 increase=9 hits=285 attempts=285 rate=100.0%
+2026-05-25 17:21:46,705 | [attempt #286] session=cce2d700 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:21:47,724 | [attempt #286] session=ae3172bd watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:21:48,712 | [attempt #286] session=fed75963 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:21:48,784 | [attempt #286] session=6fdf7057 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:21:49,695 | [attempt #286] session=3a796915 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:21:49,849 | Round 59: current_views=46579 target=100000 increase=9 hits=290 attempts=290 rate=100.0%
+2026-05-25 17:21:57,423 | [attempt #291] session=efb114e3 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:21:57,470 | [attempt #291] session=db5f2580 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:21:58,456 | [attempt #291] session=89f9f0f8 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:21:58,457 | [attempt #291] session=300c5592 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:22:00,429 | [attempt #291] session=0e21bc46 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:22:00,577 | Round 60: current_views=46579 target=100000 increase=9 hits=295 attempts=295 rate=100.0%
+2026-05-25 17:22:07,307 | [attempt #296] session=95f8e66f watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:22:08,140 | [attempt #296] session=64dd6430 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:22:08,188 | [attempt #296] session=21cc53dc watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:22:08,251 | [attempt #296] session=26866318 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:22:09,157 | [attempt #296] session=4fbd8f90 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:22:09,293 | Round 61: current_views=46579 target=100000 increase=9 hits=300 attempts=300 rate=100.0%
+2026-05-25 17:22:15,871 | [attempt #301] session=2accf3a6 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:22:16,910 | [attempt #301] session=93f50baf watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:22:19,872 | [attempt #301] session=069be3ba watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:22:19,944 | [attempt #301] session=e63d5c08 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:22:19,960 | [attempt #301] session=4ae39e05 watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:22:20,124 | Round 62: current_views=46581 target=100000 increase=11 hits=305 attempts=305 rate=100.0%
+2026-05-25 17:22:26,675 | [attempt #306] session=b498b648 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:22:26,729 | [attempt #306] session=794833b2 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:22:27,779 | [attempt #306] session=7d727a0d watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:22:28,738 | [attempt #306] session=3b80146a watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:22:28,787 | [attempt #306] session=1e631fc8 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:22:28,925 | Round 63: current_views=46581 target=100000 increase=11 hits=310 attempts=310 rate=100.0%
+2026-05-25 17:22:37,437 | [attempt #311] session=032dbebf watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:22:37,575 | [attempt #311] session=a50aa838 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:22:37,694 | [attempt #311] session=f4e55bbd watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:22:38,437 | [attempt #311] session=5b5f1d9b watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:22:38,574 | [attempt #311] session=ce4631a4 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:22:38,759 | Round 64: current_views=46581 target=100000 increase=11 hits=315 attempts=315 rate=100.0%
+2026-05-25 17:22:46,284 | [attempt #316] session=5d7f7d16 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:22:46,432 | [attempt #316] session=b89eb413 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:22:48,338 | [attempt #316] session=4028a4c7 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:22:48,419 | [attempt #316] session=81b7ade9 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:22:49,351 | [attempt #316] session=522a046b watch=10s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:22:49,622 | Round 65: current_views=46581 target=100000 increase=11 hits=320 attempts=320 rate=100.0%
+2026-05-25 17:22:57,336 | [attempt #321] session=ef0ba051 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:22:57,336 | [attempt #321] session=b9547be1 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:22:57,340 | [attempt #321] session=88df72a8 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:22:57,371 | [attempt #321] session=f2c88b1a watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:22:58,394 | [attempt #321] session=3e81e382 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:22:58,564 | Round 66: current_views=46581 target=100000 increase=11 hits=325 attempts=325 rate=100.0%
+2026-05-25 17:23:07,167 | [attempt #326] session=693660ba watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:23:08,176 | [attempt #326] session=56dd4116 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:23:08,183 | [attempt #326] session=d2455202 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:23:08,237 | [attempt #326] session=2e65ddec watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:23:08,351 | [attempt #326] session=a98f5f06 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:23:08,552 | Round 67: current_views=46581 target=100000 increase=11 hits=330 attempts=330 rate=100.0%
+2026-05-25 17:23:15,142 | [attempt #331] session=575b9be4 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:23:15,224 | [attempt #331] session=1a72090b watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:23:15,244 | [attempt #331] session=eb849774 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:23:15,270 | [attempt #331] session=3430e1a1 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:23:18,285 | [attempt #331] session=e32fbe96 watch=9s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:23:18,485 | Round 68: current_views=46581 target=100000 increase=11 hits=335 attempts=335 rate=100.0%
+2026-05-25 17:23:25,249 | [attempt #336] session=d526eb94 watch=6s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:23:26,158 | [attempt #336] session=14d3ed33 watch=7s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
+2026-05-25 17:23:27,113 | [attempt #336] session=0f5fd504 watch=8s player=OK heartbeat=OK click_status=200 click_code=0 click_response={"code":0,"message":"0","ttl":1} | HIT=YES
